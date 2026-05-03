@@ -3,6 +3,55 @@
 **Base URL:** `https://api.edupath.com/api/v1` (Production) / `http://localhost:3000/api/v1` (Development)
 **Content-Type:** `application/json`
 
+## Global Error Responses
+
+Untuk menjaga agar dokumen tetap ringkas, format respons _error_ di bawah ini berlaku secara global untuk seluruh sistem, kecuali jika ada format _error_ spesifik yang didefinisikan pada masing-masing _endpoint_.
+
+**400 Bad Request (Common Validation Errors)**
+Berlaku ketika ada field input yang kosong atau formatnya tidak sesuai (misal: format email salah).
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": "Deskripsi spesifik mengenai field mana yang salah."
+  }
+}
+```
+
+**401 Unauthorized (Expired/Invalid Token)**
+Berlaku secara mutlak untuk seluruh endpoint yang memiliki status Access: Private.
+
+```json
+{
+  "success": false,
+  "message": "Unauthorized access",
+  "data": null,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "details": "Access token is missing, invalid, or has expired."
+  }
+}
+```
+
+**500 Internal Server Error (System Failure)**
+Berlaku untuk semua endpoint jika terjadi kegagalan koneksi ke basis data PostgreSQL atau terputusnya komunikasi dengan peladen AI.
+
+```json
+{
+  "success": false,
+  "message": "Internal server error",
+  "data": null,
+  "error": {
+    "code": "SERVER_ERROR",
+    "details": "An unexpected error occurred on the server."
+  }
+}
+```
+
 ---
 
 ## 1. Authentication Module
