@@ -347,8 +347,7 @@ Memicu proses inferensi ke peladen model AI.
   "data": {
     "recommendation_id": "rec-uuid-v4",
     "assessment_id": "assess-uuid-v4",
-    "predicted_career_id": "car-001",
-    "confidence_score": 0.92,
+    "status": "completed",
     "created_at": "2026-05-03T12:05:00Z"
   }
 }
@@ -398,7 +397,7 @@ Memicu proses inferensi ke peladen model AI.
 
 ### 4.2. Get Recommendation Details
 
-Mengambil detail hasil rekomendasi untuk kebutuhan visualisasi di frontend.
+Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kognitif dinamis (untuk visualisasi grafik) serta 3 rekomendasi jalur karir beserta jurusan kuliah yang relevan.
 
 - **Endpoint:** `GET /recommendations/{id}`
 - **Access:** Private
@@ -411,27 +410,85 @@ Mengambil detail hasil rekomendasi untuk kebutuhan visualisasi di frontend.
   "success": true,
   "message": "Recommendation retrieved successfully",
   "data": {
-    "recommendation_id": "rec-uuid-v4",
-    "confidence_score": 0.92,
-    "career_details": {
-      "career_id": "car-001",
-      "career_name": "Software Engineer",
-      "recommended_majors": [
-        {
-          "major_id": "maj-001",
-          "major_name": "Ilmu Komputer"
-        },
-        {
-          "major_id": "maj-002",
-          "major_name": "Sistem Informasi"
-        }
-      ]
+    "user_details": {
+      "full_name": "Alex Pratama",
+      "school_name": "SMA Negeri 8 Jakarta"
     },
-    "cognitive_profile": {
-      "analytical_thinking": 85,
-      "problem_solving": 90,
-      "creativity": 75
-    }
+    "recommendation_info": {
+      "recommendation_id": "550e8400-e29b-41d4-a716-446655440000",
+      "created_at": "2026-05-03T20:30:00Z"
+    },
+    "cognitive_profile": [
+      { "subject": "Logika & Matematika", "value": 95 },
+      { "subject": "Analisa Data", "value": 92 },
+      { "subject": "Pemikiran Komputasional", "value": 88 },
+      { "subject": "Sains", "value": 75 },
+      { "subject": "Teknologi", "value": 85 },
+      { "subject": "Riset", "value": 80 }
+    ],
+    "career_matches": [
+      {
+        "rank": 1,
+        "confidence_score": 0.89,
+        "career_details": {
+          "career_id": "SWE-01",
+          "career_name": "Data Scientist",
+          "category": "Data & Artificial Intelligence",
+          "description": "Seorang ahli yang mengubah data mentah menjadi wawasan strategis."
+        },
+        "recommended_majors": [
+          {
+            "major_id": "MAJ-01",
+            "major_name": "Sains Data",
+            "faculty": "Fakultas Teknologi Informasi"
+          },
+          {
+            "major_id": "MAJ-02",
+            "major_name": "Statistika",
+            "faculty": "Fakultas Matematika dan IPA"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "confidence_score": 0.78,
+        "career_details": {
+          "career_id": "SWE-02",
+          "career_name": "Backend Engineer",
+          "category": "Software Engineering",
+          "description": "Fokus pada arsitektur peladen, pengelolaan basis data, dan performa API."
+        },
+        "recommended_majors": [
+          {
+            "major_id": "MAJ-03",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "confidence_score": 0.72,
+        "career_details": {
+          "career_id": "DES-01",
+          "career_name": "UI/UX Researcher",
+          "category": "Design",
+          "description": "Menganalisis kebutuhan pengguna untuk merancang antarmuka yang intuitif."
+        },
+        "recommended_majors": [
+          {
+            "major_id": "MAJ-04",
+            "major_name": "Sistem Informasi",
+            "faculty": "Fakultas Ilmu Komputer"
+          },
+          {
+            "major_id": "MAJ-05",
+            "major_name": "Psikologi",
+            "faculty": "Fakultas Psikologi"
+          }
+        ]
+      }
+    ]
   }
 }
 ```

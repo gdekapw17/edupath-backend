@@ -1,70 +1,60 @@
--- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- EduPath Database Initialization Script
+-- Version: 1.1 (JSONB & Multi-Career Recommendations)
 
--- 1. Tabel Sentral Pengguna
+-- 1. Users Table
 CREATE TABLE users (
     user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(150),
-    school_name VARCHAR(150),
+    full_name VARCHAR(255),
+    school_name VARCHAR(255),
     is_assessment_completed BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indeks untuk mempercepat pencarian pengguna saat login
-CREATE INDEX idx_users_email ON users(email);
-
--- 2. Tabel Master Katalog Karier (Dibuat sebelum rekomendasi agar bisa direferensikan)
+-- 2. Careers Table
 CREATE TABLE careers (
     career_id VARCHAR(50) PRIMARY KEY,
     career_name VARCHAR(150) NOT NULL,
-    category VARCHAR(100)
+    category VARCHAR(100),
+    description TEXT
 );
 
--- 3. Tabel Transaksional Asesmen
-CREATE TABLE assessments (
-    assessment_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-    math_score INT CHECK (math_score >= 0 AND math_score <= 100),
-    physics_score INT CHECK (physics_score >= 0 AND physics_score <= 100),
-    chemistry_score INT CHECK (chemistry_score >= 0 AND chemistry_score <= 100),
-    biology_score INT CHECK (biology_score >= 0 AND biology_score <= 100),
-    english_score INT CHECK (english_score >= 0 AND english_score <= 100),
-    history_score INT CHECK (history_score >= 0 AND history_score <= 100),
-    geography_score INT CHECK (geography_score >= 0 AND geography_score <= 100),
-    weekly_self_study_hours INT CHECK (weekly_self_study_hours >= 0),
-    absence_days INT CHECK (absence_days >= 0),
-    part_time_job BOOLEAN DEFAULT FALSE,
-    status VARCHAR(50) DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Indeks untuk mempercepat kueri riwayat asesmen per pengguna
-CREATE INDEX idx_assessments_user_id ON assessments(user_id);
-
--- 4. Tabel Hasil Prediksi AI
-CREATE TABLE recommendations (
-    recommendation_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    assessment_id UUID UNIQUE NOT NULL REFERENCES assessments(assessment_id) ON DELETE CASCADE,
-    predicted_career_id VARCHAR(50) REFERENCES careers(career_id) ON DELETE SET NULL,
-    confidence_score NUMERIC(5, 4), -- Membatasi desimal, misal: 0.9250
-    analytical_thinking INT CHECK (analytical_thinking >= 0 AND analytical_thinking <= 100),
-    problem_solving INT CHECK (problem_solving >= 0 AND problem_solving <= 100),
-    creativity INT CHECK (creativity >= 0 AND creativity <= 100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 5. Tabel Master Katalog Jurusan Kuliah
+-- 3. Majors Table
 CREATE TABLE majors (
     major_id VARCHAR(50) PRIMARY KEY,
     major_name VARCHAR(150) NOT NULL,
     faculty VARCHAR(100)
 );
 
--- 6. Tabel Persimpangan (Junction) Karier & Jurusan
+-- 4. Career-Majors Junction (Relasi Karir ke Jurusan N:M)
 CREATE TABLE career_majors (
     career_id VARCHAR(50) REFERENCES careers(career_id) ON DELETE CASCADE,
     major_id VARCHAR(50) REFERENCES majors(major_id) ON DELETE CASCADE,
     PRIMARY KEY (career_id, major_id)
+);
+
+-- 5. Assessments Table
+CREATE TABLE assessments (
+    assessment_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+    raw_data JSONB, 
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 6. Recommendations Table
+CREATE TABLE recommendations (
+    recommendation_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    assessment_id UUID UNIQUE REFERENCES assessments(assessment_id) ON DELETE CASCADE,
+    cognitive_profile JSONB,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 7. Recommendation-Careers Junction (Menyimpan 1 Utama & 2 Alternatif Karir)
+CREATE TABLE recommendation_careers (
+    recommendation_id UUID REFERENCES recommendations(recommendation_id) ON DELETE CASCADE,
+    career_id VARCHAR(50) REFERENCES careers(career_id) ON DELETE CASCADE,
+    match_rank INTEGER NOT NULL, 
+    confidence_score FLOAT, 
+    PRIMARY KEY (recommendation_id, career_id)
 );
