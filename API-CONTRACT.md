@@ -232,3 +232,88 @@ Mengambil detail profil dari siswa yang sedang terautentikasi.
   }
 }
 ```
+
+## 3. Assessment & Academic Data Module
+
+Modul ini mengelola pengiriman dan riwayat data akademik serta perilaku belajar siswa yang akan menjadi _input_ untuk model prediktif.
+
+### 3.1. Submit Assessment
+
+Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan mengembalikan ID asesmen yang nantinya digunakan untuk memicu proses prediksi karier.
+
+- **Endpoint:** `POST /assessments`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Request Body:**
+
+```json
+{
+  "academic_scores": {
+    "math": 85,
+    "physics": 78,
+    "chemistry": 80,
+    "biology": 75,
+    "english": 90,
+    "history": 82,
+    "geography": 88
+  },
+  "behavioral_metrics": {
+    "weekly_self_study_hours": 15,
+    "absence_days": 2,
+    "part_time_job": false
+  }
+}
+```
+
+**Success Response (201 Created):**
+
+```json
+{
+  "success": true,
+  "message": "Assessment data submitted successfully",
+  "data": {
+    "assessment_id": "assess-uuid-v4",
+    "user_id": "uuid-v4-string",
+    "created_at": "2026-05-03T12:00:00Z"
+  }
+}
+```
+
+**Error Response (422 Unprocessable Entity - Out of Range Data):**
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "error": {
+    "code": "OUT_OF_RANGE",
+    "details": "Academic scores must be between 0 and 100. Invalid value found in 'math'."
+  }
+}
+```
+
+### 3.2. Get Assessment History
+
+Mengambil riwayat asesmen yang pernah diisi oleh siswa.
+
+- **Endpoint:** `GET /assessments`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Assessment history retrieved successfully",
+  "data": [
+    {
+      "assessment_id": "assess-uuid-v4",
+      "created_at": "2026-05-03T12:00:00Z",
+      "status": "processed"
+    }
+  ]
+}
+```
