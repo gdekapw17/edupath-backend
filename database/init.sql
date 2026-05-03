@@ -54,3 +54,17 @@ CREATE TABLE recommendations (
     creativity INT CHECK (creativity >= 0 AND creativity <= 100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- 5. Tabel Master Katalog Jurusan Kuliah
+CREATE TABLE majors (
+    major_id VARCHAR(50) PRIMARY KEY,
+    major_name VARCHAR(150) NOT NULL,
+    faculty VARCHAR(100)
+);
+
+-- 6. Tabel Persimpangan (Junction) Karier & Jurusan
+CREATE TABLE career_majors (
+    career_id VARCHAR(50) REFERENCES careers(career_id) ON DELETE CASCADE,
+    major_id VARCHAR(50) REFERENCES majors(major_id) ON DELETE CASCADE,
+    PRIMARY KEY (career_id, major_id)
+);

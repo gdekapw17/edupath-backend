@@ -491,7 +491,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"message\": \"Recommendation retrieved successfully\",\n  \"data\": {\n    \"recommendation_id\": \"rec-uuid-v4\",\n    \"predicted_career_id\": \"car-001\",\n    \"confidence_score\": 0.92,\n    \"cognitive_profile\": {\n      \"analytical_thinking\": 85,\n      \"problem_solving\": 90,\n      \"creativity\": 75\n    }\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"message\": \"Recommendation retrieved successfully\",\n  \"data\": {\n    \"recommendation_id\": \"rec-uuid-v4\",\n    \"confidence_score\": 0.92,\n    \"career_details\": {\n      \"career_id\": \"car-001\",\n      \"career_name\": \"Software Engineer\",\n      \"recommended_majors\": [\n        {\n          \"major_id\": \"maj-001\",\n          \"major_name\": \"Ilmu Komputer\"\n        },\n        {\n          \"major_id\": \"maj-002\",\n          \"major_name\": \"Sistem Informasi\"\n        }\n      ]\n    },\n    \"cognitive_profile\": {\n      \"analytical_thinking\": 85,\n      \"problem_solving\": 90,\n      \"creativity\": 75\n    }\n  }\n}"
             }
           ]
         }
