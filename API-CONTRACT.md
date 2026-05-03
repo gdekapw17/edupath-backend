@@ -317,3 +317,154 @@ Mengambil riwayat asesmen yang pernah diisi oleh siswa.
   ]
 }
 ```
+
+## 4. Recommendation & AI Integration Module
+
+Modul ini menangani komunikasi dengan peladen AI untuk menghasilkan prediksi kecocokan karier berdasarkan profil akademik dan perilaku belajar siswa.
+
+### 4.1. Generate Prediction
+
+Memicu proses inferensi ke peladen model AI.
+
+- **Endpoint:** `POST /recommendations/predict`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Request Body:**
+
+```json
+{
+  "assessment_id": "assess-uuid-v4"
+}
+```
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Prediction generated successfully",
+  "data": {
+    "recommendation_id": "rec-uuid-v4",
+    "assessment_id": "assess-uuid-v4",
+    "predicted_career_id": "car-001",
+    "confidence_score": 0.92,
+    "created_at": "2026-05-03T12:05:00Z"
+  }
+}
+```
+
+**Error Response (404 Not Found - Assessment Missing):**
+
+```json
+{
+  "success": false,
+  "message": "Assessment not found",
+  "data": null,
+  "error": {
+    "code": "ASSESSMENT_NOT_FOUND",
+    "details": "No assessment data found for the provided ID."
+  }
+}
+```
+
+**Error Response (409 Conflict - Already Predicted):**
+
+```json
+{
+  "success": false,
+  "message": "Prediction already exists",
+  "data": null,
+  "error": {
+    "code": "PREDICTION_ALREADY_EXISTS",
+    "details": "A prediction has already been generated for this assessment ID."
+  }
+}
+```
+
+**Error Response (502 Bad Gateway - AI Server Unreachable):**
+
+```json
+{
+  "success": false,
+  "message": "AI Engine unavailable",
+  "data": null,
+  "error": {
+    "code": "AI_ENGINE_DOWN",
+    "details": "Failed to communicate with the prediction engine. Please try again later."
+  }
+}
+```
+
+### 4.2. Get Recommendation Details
+
+Mengambil detail hasil rekomendasi untuk kebutuhan visualisasi di frontend.
+
+- **Endpoint:** `GET /recommendations/{id}`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Recommendation retrieved successfully",
+  "data": {
+    "recommendation_id": "rec-uuid-v4",
+    "predicted_career_id": "car-001",
+    "confidence_score": 0.92,
+    "cognitive_profile": {
+      "analytical_thinking": 85,
+      "problem_solving": 90,
+      "creativity": 75
+    }
+  }
+}
+```
+
+**Error Response (404 Not Found - Recommendation Missing):**
+
+```json
+{
+  "success": false,
+  "message": "Recommendation not found",
+  "data": null,
+  "error": {
+    "code": "RECOMMENDATION_NOT_FOUND",
+    "details": "No recommendation data found for the provided ID."
+  }
+}
+```
+
+## 5. Master Data Module
+
+Modul ini menyediakan referensi data statis yang digunakan untuk mendukung elemen antarmuka pengguna.
+
+### 5.1. Get Career Catalog
+
+Mengambil daftar lengkap jalur karier dan jurusan yang didukung oleh sistem.
+
+- **Endpoint:** `GET /careers`
+- **Access:** Public
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Career catalog retrieved successfully",
+  "data": [
+    {
+      "career_id": "car-001",
+      "career_name": "Software Engineer",
+      "category": "Technology"
+    },
+    {
+      "career_id": "car-002",
+      "career_name": "Data Scientist",
+      "category": "Data"
+    }
+  ]
+}
+```
