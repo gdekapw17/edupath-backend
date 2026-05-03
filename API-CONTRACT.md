@@ -155,3 +155,80 @@ Mengautentikasi pengguna dan mengembalikan token akses (JWT) yang akan digunakan
   }
 }
 ```
+
+## 2. User Profile Module
+
+Modul ini mengelola data profil siswa. Semua endpoint di modul ini bersifat privat dan mewajibkan penyertaan token akses (JWT) pada _header_ permintaan.
+
+### 2.1. Get Current User Profile
+
+Mengambil detail profil dari siswa yang sedang terautentikasi.
+
+- **Endpoint:** `GET /profiles/me`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Profile retrieved successfully",
+  "data": {
+    "user_id": "uuid-v4-string",
+    "email": "siswa@example.com",
+    "full_name": "Budi Santoso",
+    "school_name": "SMA Negeri 1 Jakarta",
+    "is_assessment_completed": false
+  },
+  "error": null
+}
+```
+
+### 2.2. Update User Profile
+
+Mengambil detail profil dari siswa yang sedang terautentikasi.
+
+- **Endpoint:** `PUT /profiles/me`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Request Body:**
+
+```json
+{
+  "full_name": "Budi Santoso",
+  "school_name": "SMA Negeri 1 Jakarta Pusat"
+}
+```
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Profile updated successfully",
+  "data": {
+    "user_id": "uuid-v4-string",
+    "email": "siswa@example.com",
+    "full_name": "Budi Santoso",
+    "school_name": "SMA Negeri 1 Jakarta Pusat",
+    "updated_at": "2026-05-03T11:00:00Z"
+  },
+  "error": null
+}
+```
+
+**Error Response (400 Bad Request - Validation Error):**
+
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": "The 'school_name' field cannot be empty."
+  }
+}
+```
