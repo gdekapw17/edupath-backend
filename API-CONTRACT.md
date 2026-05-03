@@ -1,7 +1,7 @@
 # EduPath API Contract
 
-**Base URL:** `https://api.edupath.com/api/v1` (Production) / `http://localhost:3000/api/v1` (Development)
-**Content-Type:** `application/json`
+- **Base URL:** `https://api.edupath.com/api/v1` (Production) / `http://localhost:3000/api/v1` (Development)
+- **Content-Type:** `application/json`
 
 ## Global Error Responses
 
@@ -93,7 +93,7 @@ Mendaftarkan akun siswa baru ke dalam sistem.
 }
 ```
 
-**Error Response (400 Bad Request - Email already exist):**
+**Error Response (400 Bad Request - Email already exists):**
 
 ```json
 {
@@ -187,7 +187,7 @@ Mengambil detail profil dari siswa yang sedang terautentikasi.
 
 ### 2.2. Update User Profile
 
-Mengambil detail profil dari siswa yang sedang terautentikasi.
+Memperbarui informasi profil siswa, misalnya jika ada kesalahan ketik pada nama asal sekolah.
 
 - **Endpoint:** `PUT /profiles/me`
 - **Access:** Private
