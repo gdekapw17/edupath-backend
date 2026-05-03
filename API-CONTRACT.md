@@ -412,8 +412,21 @@ Mengambil detail hasil rekomendasi untuk kebutuhan visualisasi di frontend.
   "message": "Recommendation retrieved successfully",
   "data": {
     "recommendation_id": "rec-uuid-v4",
-    "predicted_career_id": "car-001",
     "confidence_score": 0.92,
+    "career_details": {
+      "career_id": "car-001",
+      "career_name": "Software Engineer",
+      "recommended_majors": [
+        {
+          "major_id": "maj-001",
+          "major_name": "Ilmu Komputer"
+        },
+        {
+          "major_id": "maj-002",
+          "major_name": "Sistem Informasi"
+        }
+      ]
+    },
     "cognitive_profile": {
       "analytical_thinking": 85,
       "problem_solving": 90,
