@@ -46,11 +46,12 @@ CREATE TABLE assessments (
 CREATE TABLE recommendations (
     recommendation_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     assessment_id UUID UNIQUE REFERENCES assessments(assessment_id) ON DELETE CASCADE,
+    ai_summary TEXT,
     cognitive_profile JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 7. Recommendation-Careers Junction (Menyimpan 1 Utama & 2 Alternatif Karir)
+-- 7. Recommendation-Careers Junction
 CREATE TABLE recommendation_careers (
     recommendation_id UUID REFERENCES recommendations(recommendation_id) ON DELETE CASCADE,
     career_id VARCHAR(50) REFERENCES careers(career_id) ON DELETE CASCADE,

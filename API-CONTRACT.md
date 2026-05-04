@@ -418,6 +418,7 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
       "recommendation_id": "550e8400-e29b-41d4-a716-446655440000",
       "created_at": "2026-05-03T20:30:00Z"
     },
+    "ai_summary": "Alex memiliki intuisi analitis yang luar biasa dipadukan dengan pemikiran komputasional yang sangat terstruktur. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data dan sangat teliti terhadap detail. Dengan keunggulan logikanya yang menonjol, Alex memiliki potensi yang sangat besar untuk unggul di lingkungan teknis yang serba cepat dan berfokus pada inovasi teknologi.",
     "cognitive_profile": [
       { "subject": "Logika & Matematika", "value": 95 },
       { "subject": "Analisa Data", "value": 92 },
