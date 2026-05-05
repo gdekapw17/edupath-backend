@@ -59,3 +59,6 @@ CREATE TABLE recommendation_careers (
     confidence_score FLOAT, 
     PRIMARY KEY (recommendation_id, career_id)
 );
+
+-- 8. Indexes for Performance Optimization
+CREATE INDEX idx_assessments_user_id ON assessments(user_id);
