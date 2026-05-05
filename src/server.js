@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import { query } from "./config/database.js";
+import pool, { testConnection } from "./config/database.js";
 
 dotenv.config();
 
@@ -18,15 +18,41 @@ app.get("/", (req, res) => {
   });
 });
 
-// Tes koneksi basis data sederhana sebelum server sepenuhnya berjalan
-query("SELECT NOW() AS current_time_db")
-  .then((result) => {
-    console.log(`Database Time: ${result.rows[0].current_time_db}`);
+// --- API Routes ---
 
-    app.listen(PORT, () => {
-      console.log(`The server is running on http://localhost:${PORT}`);
+// --- Server Initialization ---
+const startServer = async () => {
+  try {
+    await testConnection();
+
+    const server = app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
     });
-  })
-  .catch((err) => {
-    console.error("Failed to connect to the database. Server is stopped.", err);
-  });
+
+    const shutdown = () => {
+      console.log("\nShutting down gracefully...");
+      server.close(() => {
+        console.log("HTTP server closed.");
+        pool.end(() => {
+          console.log("Database pool connections closed.");
+          process.exit(0);
+        });
+      });
+
+      setTimeout(() => {
+        console.error("Forcing shutdown due to timeout.");
+        process.exit(1);
+      }, 10000);
+    };
+
+    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", shutdown);
+  } catch (error) {
+    console.error(
+      "Failed to start server due to database initialization error.",
+    );
+    process.exit(1);
+  }
+};
+
+startServer();
