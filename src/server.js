@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import pool, { testConnection } from "./config/database.js";
 
+import authRoutes from "./routes/authRoutes.js";
+
 dotenv.config();
 
 const app = express();
@@ -19,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 // --- API Routes ---
+app.use("/api/v1/auth", authRoutes);
 
 // --- Server Initialization ---
 const startServer = async () => {
@@ -47,9 +50,9 @@ const startServer = async () => {
 
     process.on("SIGINT", shutdown);
     process.on("SIGTERM", shutdown);
-  } catch (error) {
+  } catch {
     console.error(
-      "Failed to start server due to database initialization error.",
+      "Failed to start server due to database initialization error."
     );
     process.exit(1);
   }
