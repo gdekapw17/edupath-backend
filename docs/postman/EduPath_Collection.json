@@ -1,8 +1,10 @@
 {
   "info": {
+    "_postman_id": "f4f02510-fc05-49b6-94a7-312e1189146b",
     "name": "EduPath API",
     "description": "RESTful API Backend for EduPath - Capstone Project CC26-PSU253",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43143535"
   },
   "item": [
     {
@@ -24,8 +26,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/register",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "register"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
             }
           },
           "response": [
@@ -45,8 +52,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/auth/register",
-                  "host": ["{{base_url}}"],
-                  "path": ["auth", "register"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
                 }
               },
               "status": "Created",
@@ -77,8 +89,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/auth/register",
-                  "host": ["{{base_url}}"],
-                  "path": ["auth", "register"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
                 }
               },
               "status": "Bad Request",
@@ -111,8 +128,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
             }
           },
           "response": [
@@ -132,8 +154,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/auth/login",
-                  "host": ["{{base_url}}"],
-                  "path": ["auth", "login"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
                 }
               },
               "status": "OK",
@@ -167,8 +194,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/profiles/me",
-              "host": ["{{base_url}}"],
-              "path": ["profiles", "me"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profiles",
+                "me"
+              ]
             }
           },
           "response": [
@@ -184,8 +216,13 @@
                 ],
                 "url": {
                   "raw": "{{base_url}}/profiles/me",
-                  "host": ["{{base_url}}"],
-                  "path": ["profiles", "me"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profiles",
+                    "me"
+                  ]
                 }
               },
               "status": "OK",
@@ -222,8 +259,13 @@
             },
             "url": {
               "raw": "{{base_url}}/profiles/me",
-              "host": ["{{base_url}}"],
-              "path": ["profiles", "me"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profiles",
+                "me"
+              ]
             }
           },
           "response": [
@@ -247,8 +289,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/profiles/me",
-                  "host": ["{{base_url}}"],
-                  "path": ["profiles", "me"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "profiles",
+                    "me"
+                  ]
                 }
               },
               "status": "OK",
@@ -286,12 +333,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"academic_scores\": {\n    \"math\": 85,\n    \"physics\": 78,\n    \"chemistry\": 80,\n    \"biology\": 75,\n    \"english\": 90,\n    \"history\": 82,\n    \"geography\": 88\n  },\n  \"behavioral_metrics\": {\n    \"weekly_self_study_hours\": 15,\n    \"absence_days\": 2,\n    \"part_time_job\": false\n  }\n}"
+              "raw": "{\n  \"academic_scores\": {\n    \"science\": {\n      \"math\": 80,\n      \"physics\": 80,\n      \"chemistry\": 75,\n      \"biology\": 70\n    },\n    \"social\": {\n      \"history\": 70,\n      \"geography\": 65,\n      \"english\": 75\n    }\n  },\n  \"behavioral_metrics\": {\n    \"weekly_study_hours\": 10,\n    \"absence_days\": 2,\n    \"extracurricular\": \"Tidak Ada\"\n  }\n}"
             },
             "url": {
               "raw": "{{base_url}}/assessments",
-              "host": ["{{base_url}}"],
-              "path": ["assessments"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments"
+              ]
             }
           },
           "response": [
@@ -315,8 +366,12 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/assessments",
-                  "host": ["{{base_url}}"],
-                  "path": ["assessments"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "assessments"
+                  ]
                 }
               },
               "status": "Created",
@@ -345,8 +400,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/assessments",
-              "host": ["{{base_url}}"],
-              "path": ["assessments"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments"
+              ]
             }
           },
           "response": [
@@ -362,8 +421,12 @@
                 ],
                 "url": {
                   "raw": "{{base_url}}/assessments",
-                  "host": ["{{base_url}}"],
-                  "path": ["assessments"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "assessments"
+                  ]
                 }
               },
               "status": "OK",
@@ -405,8 +468,13 @@
             },
             "url": {
               "raw": "{{base_url}}/recommendations/predict",
-              "host": ["{{base_url}}"],
-              "path": ["recommendations", "predict"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recommendations",
+                "predict"
+              ]
             }
           },
           "response": [
@@ -430,8 +498,13 @@
                 },
                 "url": {
                   "raw": "{{base_url}}/recommendations/predict",
-                  "host": ["{{base_url}}"],
-                  "path": ["recommendations", "predict"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "recommendations",
+                    "predict"
+                  ]
                 }
               },
               "status": "OK",
@@ -460,8 +533,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/recommendations/rec-uuid-v4",
-              "host": ["{{base_url}}"],
-              "path": ["recommendations", "rec-uuid-v4"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "recommendations",
+                "rec-uuid-v4"
+              ]
             }
           },
           "response": [
@@ -477,8 +555,13 @@
                 ],
                 "url": {
                   "raw": "{{base_url}}/recommendations/rec-uuid-v4",
-                  "host": ["{{base_url}}"],
-                  "path": ["recommendations", "rec-uuid-v4"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "recommendations",
+                    "rec-uuid-v4"
+                  ]
                 }
               },
               "status": "OK",
@@ -491,7 +574,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"message\": \"Recommendation retrieved successfully\",\n  \"data\": {\n    \"user_details\": {\n      \"full_name\": \"Alex Pratama\",\n      \"school_name\": \"SMA Negeri 8 Jakarta\"\n    },\n    \"recommendation_info\": {\n      \"recommendation_id\": \"rec-uuid-v4\",\n      \"created_at\": \"2026-05-04T16:30:00Z\"\n    },\n    \"ai_summary\": \"Alex memiliki intuisi analitis yang luar biasa dipadukan dengan pemikiran komputasional yang sangat terstruktur. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data dan sangat teliti terhadap detail. Dengan keunggulan logikanya yang menonjol, Alex memiliki potensi yang sangat besar untuk unggul di lingkungan teknis yang serba cepat dan berfokus pada inovasi teknologi.\",\n    \"cognitive_profile\": [\n      { \"subject\": \"Logika & Matematika\", \"value\": 95 },\n      { \"subject\": \"Analisa Data\", \"value\": 92 },\n      { \"subject\": \"Pemikiran Komputasional\", \"value\": 88 },\n      { \"subject\": \"Sains\", \"value\": 75 },\n      { \"subject\": \"Teknologi\", \"value\": 85 },\n      { \"subject\": \"Riset\", \"value\": 80 }\n    ],\n    \"career_matches\": [\n      {\n        \"rank\": 1,\n        \"confidence_score\": 0.89,\n        \"career_details\": {\n          \"career_id\": \"SWE-01\",\n          \"career_name\": \"Data Scientist\",\n          \"category\": \"Data & Artificial Intelligence\",\n          \"description\": \"Seorang ahli yang mengubah data mentah menjadi wawasan strategis.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-01\", \"major_name\": \"Sains Data\", \"faculty\": \"Fakultas Teknologi Informasi\" },\n          { \"major_id\": \"MAJ-02\", \"major_name\": \"Statistika\", \"faculty\": \"Fakultas Matematika dan IPA\" }\n        ]\n      },\n      {\n        \"rank\": 2,\n        \"confidence_score\": 0.78,\n        \"career_details\": {\n          \"career_id\": \"SWE-02\",\n          \"career_name\": \"Backend Engineer\",\n          \"category\": \"Software Engineering\",\n          \"description\": \"Fokus pada arsitektur peladen, pengelolaan basis data, dan performa API.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-03\", \"major_name\": \"Teknik Informatika\", \"faculty\": \"Fakultas Teknik\" }\n        ]\n      },\n      {\n        \"rank\": 3,\n        \"confidence_score\": 0.72,\n        \"career_details\": {\n          \"career_id\": \"DES-01\",\n          \"career_name\": \"UI/UX Researcher\",\n          \"category\": \"Design\",\n          \"description\": \"Menganalisis kebutuhan pengguna untuk merancang antarmuka yang intuitif.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-04\", \"major_name\": \"Sistem Informasi\", \"faculty\": \"Fakultas Ilmu Komputer\" },\n          { \"major_id\": \"MAJ-05\", \"major_name\": \"Psikologi\", \"faculty\": \"Fakultas Psikologi\" }\n        ]\n      }\n    ]\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"message\": \"Recommendation retrieved successfully\",\n  \"data\": {\n    \"user_details\": {\n      \"full_name\": \"Alex Pratama\",\n      \"school_name\": \"SMA Negeri 8 Jakarta\"\n    },\n    \"recommendation_info\": {\n      \"recommendation_id\": \"rec-uuid-v4\",\n      \"created_at\": \"2026-05-03T20:30:00Z\"\n    },\n    \"ai_summary\": \"Alex memiliki kemampuan berpikir komputasional dan determinasi yang sangat menonjol. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data\",\n    \"cognitive_profile\": [\n      { \"subject\": \"Logika & Analitik\", \"value\": 88 },\n      { \"subject\": \"Literasi Sains\", \"value\": 82 },\n      { \"subject\": \"Wawasan Sosial\", \"value\": 75 },\n      { \"subject\": \"Komunikasi Verbal\", \"value\": 80 },\n      { \"subject\": \"Manajemen Diri\", \"value\": 90 },\n      { \"subject\": \"Interpersonal\", \"value\": 85 }\n    ],\n    \"career_matches\": [\n      {\n        \"rank\": 1,\n        \"confidence_score\": 0.89,\n        \"career_details\": {\n          \"career_id\": \"SWE-01\",\n          \"career_name\": \"Data Scientist\",\n          \"category\": \"Data & Artificial Intelligence\",\n          \"description\": \"Seorang ahli yang mengubah data mentah menjadi wawasan strategis.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-01\", \"major_name\": \"Sains Data\", \"faculty\": \"Fakultas Teknologi Informasi\" },\n          { \"major_id\": \"MAJ-02\", \"major_name\": \"Statistika\", \"faculty\": \"Fakultas Matematika dan IPA\" }\n        ]\n      },\n      {\n        \"rank\": 2,\n        \"confidence_score\": 0.78,\n        \"career_details\": {\n          \"career_id\": \"SWE-02\",\n          \"career_name\": \"Backend Engineer\",\n          \"category\": \"Software Engineering\",\n          \"description\": \"Fokus pada arsitektur peladen, pengelolaan basis data, dan performa API.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-03\", \"major_name\": \"Teknik Informatika\", \"faculty\": \"Fakultas Teknik\" }\n        ]\n      },\n      {\n        \"rank\": 3,\n        \"confidence_score\": 0.72,\n        \"career_details\": {\n          \"career_id\": \"DES-01\",\n          \"career_name\": \"UI/UX Researcher\",\n          \"category\": \"Design\",\n          \"description\": \"Menganalisis kebutuhan pengguna untuk merancang antarmuka yang intuitif.\"\n        },\n        \"recommended_majors\": [\n          { \"major_id\": \"MAJ-04\", \"major_name\": \"Sistem Informasi\", \"faculty\": \"Fakultas Ilmu Komputer\" },\n          { \"major_id\": \"MAJ-05\", \"major_name\": \"Psikologi\", \"faculty\": \"Fakultas Psikologi\" }\n        ]\n      }\n    ]\n  }\n}"
             }
           ]
         }
@@ -507,8 +590,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/careers",
-              "host": ["{{base_url}}"],
-              "path": ["careers"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "careers"
+              ]
             }
           },
           "response": [
@@ -519,8 +606,12 @@
                 "header": [],
                 "url": {
                   "raw": "{{base_url}}/careers",
-                  "host": ["{{base_url}}"],
-                  "path": ["careers"]
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "careers"
+                  ]
                 }
               },
               "status": "OK",

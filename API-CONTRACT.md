@@ -250,18 +250,22 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
 ```json
 {
   "academic_scores": {
-    "math": 85,
-    "physics": 78,
-    "chemistry": 80,
-    "biology": 75,
-    "english": 90,
-    "history": 82,
-    "geography": 88
+    "science": {
+      "math": 80,
+      "physics": 80,
+      "chemistry": 75,
+      "biology": 70
+    },
+    "social": {
+      "history": 70,
+      "geography": 65,
+      "english": 75
+    }
   },
   "behavioral_metrics": {
-    "weekly_self_study_hours": 15,
+    "weekly_study_hours": 10,
     "absence_days": 2,
-    "part_time_job": false
+    "extracurricular": "Tidak Ada"
   }
 }
 ```
@@ -418,14 +422,14 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
       "recommendation_id": "550e8400-e29b-41d4-a716-446655440000",
       "created_at": "2026-05-03T20:30:00Z"
     },
-    "ai_summary": "Alex memiliki intuisi analitis yang luar biasa dipadukan dengan pemikiran komputasional yang sangat terstruktur. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data dan sangat teliti terhadap detail. Dengan keunggulan logikanya yang menonjol, Alex memiliki potensi yang sangat besar untuk unggul di lingkungan teknis yang serba cepat dan berfokus pada inovasi teknologi.",
+    "ai_summary": "Alex memiliki kemampuan berpikir komputasional dan determinasi yang sangat menonjol. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data",
     "cognitive_profile": [
-      { "subject": "Logika & Matematika", "value": 95 },
-      { "subject": "Analisa Data", "value": 92 },
-      { "subject": "Pemikiran Komputasional", "value": 88 },
-      { "subject": "Sains", "value": 75 },
-      { "subject": "Teknologi", "value": 85 },
-      { "subject": "Riset", "value": 80 }
+      { "subject": "Logika & Analitik", "value": 88 },
+      { "subject": "Literasi Sains", "value": 82 },
+      { "subject": "Wawasan Sosial", "value": 75 },
+      { "subject": "Komunikasi Verbal", "value": 80 },
+      { "subject": "Manajemen Diri", "value": 90 },
+      { "subject": "Interpersonal", "value": 85 }
     ],
     "career_matches": [
       {
