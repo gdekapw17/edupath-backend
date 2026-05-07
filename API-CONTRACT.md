@@ -131,7 +131,7 @@ Mengautentikasi pengguna dan mengembalikan token akses (JWT) yang akan digunakan
   "message": "Login successful",
   "data": {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5c...",
-    "expires_in": 3600,
+    "expires_in": 604800,
     "user": {
       "user_id": "uuid-v4-string",
       "email": "siswa@example.com",
