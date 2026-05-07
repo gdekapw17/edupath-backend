@@ -4,6 +4,7 @@ import cors from "cors";
 import pool, { testConnection } from "./config/database.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.get("/", (req, res) => {
 
 // --- API Routes ---
 app.use("/api/v1/auth", authRoutes);
+
+app.use("/api/v1/profiles", profileRoutes);
 
 // --- Server Initialization ---
 const startServer = async () => {
