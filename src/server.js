@@ -5,6 +5,7 @@ import pool, { testConnection } from "./config/database.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import assessmentRoutes from "./routes/assessmentRoutes.js";
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 
 app.use("/api/v1/profiles", profileRoutes);
+
+app.use("/api/v1/assessments", assessmentRoutes);
 
 // --- Server Initialization ---
 const startServer = async () => {
