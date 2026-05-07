@@ -114,6 +114,26 @@
         },
         {
           "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Mengubah respons JSON menjadi objek JavaScript\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "// Jika login sukses, simpan token ke dalam variabel environment bernama \"access_token\"\r",
+                  "if (response.success === true) {\r",
+                  "    pm.environment.set(\"access_token\", response.data.access_token);\r",
+                  "    console.log(\"Token berhasil ditangkap dan disimpan!\");\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -311,6 +331,30 @@
               "body": "{\n  \"success\": true,\n  \"message\": \"Profile updated successfully\",\n  \"data\": {\n    \"user_id\": \"uuid-v4-string\",\n    \"email\": \"siswa@example.com\",\n    \"full_name\": \"Budi Santoso\",\n    \"school_name\": \"SMA Negeri 1 Jakarta Pusat\",\n    \"updated_at\": \"2026-05-03T11:00:00Z\"\n  },\n  \"error\": null\n}"
             }
           ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
         }
       ]
     },
@@ -631,16 +675,48 @@
       ]
     }
   ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
   "variable": [
     {
       "key": "base_url",
-      "value": "http://localhost:3000/api/v1",
-      "type": "string"
+      "value": "http://localhost:3000/api/v1"
     },
     {
       "key": "access_token",
-      "value": "eyJhbGciOiJI...",
-      "type": "string"
+      "value": "eyJhbGciOiJI..."
     }
   ]
 }
