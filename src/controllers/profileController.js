@@ -95,13 +95,14 @@ export const updateProfile = async (req, res) => {
     });
   } catch (error) {
     console.error("Error on updateProfile,", error);
+
     return res.status(500).json({
       success: false,
       message: "Internal server error",
       data: null,
       error: {
         code: "SERVER_ERROR",
-        details: "an error occurred while updating the profile.",
+        details: "An error occurred while updating the profile.",
       },
     });
   }
