@@ -61,7 +61,7 @@ export const saveRecommendation = async (assessmentId, aiData) => {
  */
 export const getRecommendationById = async (recommendationId) => {
   const sql = `
-    SELECT 
+   SELECT 
       r.recommendation_id, 
       r.assessment_id, 
       r.ai_summary, 
@@ -72,7 +72,19 @@ export const getRecommendationById = async (recommendationId) => {
       c.category, 
       c.description,
       rc.match_rank, 
-      rc.confidence_score
+      rc.confidence_score,
+      (
+        SELECT json_agg(
+          json_build_object(
+            'major_id', m.major_id, 
+            'major_name', m.major_name,
+            'faculty', m.faculty
+          )
+        )
+        FROM career_majors cm
+        JOIN majors m ON cm.major_id = m.major_id
+        WHERE cm.career_id = c.career_id
+      ) AS related_majors
     FROM recommendations r
     JOIN recommendation_careers rc ON r.recommendation_id = rc.recommendation_id
     JOIN careers c ON rc.career_id = c.career_id
@@ -97,6 +109,7 @@ export const getRecommendationById = async (recommendationId) => {
       description: row.description,
       match_rank: row.match_rank,
       confidence_score: row.confidence_score,
+      related_majors: row.related_majors || [],
     })),
   };
 
