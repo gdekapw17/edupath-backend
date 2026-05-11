@@ -1,5 +1,8 @@
 import { mockPredictCareer } from "../services/aiService.js";
-import { saveRecommendation } from "../models/recommendationModel.js";
+import {
+  saveRecommendation,
+  getRecommendationById,
+} from "../models/recommendationModel.js";
 
 export const generatePrediction = async (req, res) => {
   try {
@@ -41,6 +44,49 @@ export const generatePrediction = async (req, res) => {
       error: {
         code: "SERVER_ERROR",
         details: "An unexpected error occurred during prediction.",
+      },
+    });
+  }
+};
+
+/**
+ * Mengambil detail hasil prediksi karier berdasarkan ID.
+ * Endpoint: GET /recommendations/:id
+ */
+export const getRecommendationDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const recommendation = await getRecommendationById(id);
+
+    if (!recommendation) {
+      return res.status(404).json({
+        success: false,
+        message: "Recommendation not found",
+        data: null,
+        error: {
+          code: "NOT_FOUND",
+          details: "No recommendation record matches the provided ID.",
+        },
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Recommendation detail retrieved successfully",
+      data: recommendation,
+    });
+  } catch (error) {
+    console.error("Error on getRecommendationDetail,", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      data: null,
+      error: {
+        code: "SERVER_ERROR",
+        details:
+          "An unexpected error occurred while fetching the recommendation.",
       },
     });
   }

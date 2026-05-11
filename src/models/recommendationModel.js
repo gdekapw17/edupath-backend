@@ -51,3 +51,54 @@ export const saveRecommendation = async (assessmentId, aiData) => {
     client.release();
   }
 };
+
+/**
+ * Mengambil detail rekomendasi berdasarkan ID.
+ * Melakukan JOIN antara tabel recommendations, recommendation_careers, dan careers.
+ *
+ * @param {string} reccomendationId - ID rekomendasi
+ * @returns {object|null} - Objek detail rekomendasi atau null jika tidak ditemukan
+ */
+export const getRecommendationById = async (recommendationId) => {
+  const sql = `
+    SELECT 
+      r.recommendation_id, 
+      r.assessment_id, 
+      r.ai_summary, 
+      r.cognitive_profile, 
+      r.created_at,
+      rc.career_id, 
+      c.career_name, 
+      c.category, 
+      c.description,
+      rc.match_rank, 
+      rc.confidence_score
+    FROM recommendations r
+    JOIN recommendation_careers rc ON r.recommendation_id = rc.recommendation_id
+    JOIN careers c ON rc.career_id = c.career_id
+    WHERE r.recommendation_id = $1
+    ORDER BY rc.match_rank ASC
+  `;
+
+  const result = await pool.query(sql, [recommendationId]);
+
+  const parentData = result.rows[0];
+
+  const formattedResponse = {
+    recommendation_id: parentData.recommendation_id,
+    assessment_id: parentData.assessment_id,
+    ai_summary: parentData.ai_summary,
+    cognitive_profile: parentData.cognitive_profile,
+    created_at: parentData.created_at,
+    career_matches: result.rows.map((row) => ({
+      career_id: row.career_id,
+      career_name: row.career_name,
+      category: row.category,
+      description: row.description,
+      match_rank: row.match_rank,
+      confidence_score: row.confidence_score,
+    })),
+  };
+
+  return formattedResponse;
+};

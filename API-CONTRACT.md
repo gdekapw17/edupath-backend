@@ -433,63 +433,52 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
     ],
     "career_matches": [
       {
-        "rank": 1,
-        "confidence_score": 0.89,
-        "career_details": {
-          "career_id": "SWE-01",
-          "career_name": "Data Scientist",
-          "category": "Data & Artificial Intelligence",
-          "description": "Seorang ahli yang mengubah data mentah menjadi wawasan strategis."
-        },
-        "recommended_majors": [
+        "career_id": "CAR-002",
+        "career_name": "Software Engineer",
+        "category": "Software Engineering",
+        "description": "Membangun arsitektur perangkat lunak, peladen, dan sistem aplikasi yang dapat diskalakan dan berkinerja tinggi.",
+        "match_rank": 1,
+        "confidence_score": 0.95,
+        "related_majors": [
           {
-            "major_id": "MAJ-01",
-            "major_name": "Sains Data",
-            "faculty": "Fakultas Teknologi Informasi"
-          },
-          {
-            "major_id": "MAJ-02",
-            "major_name": "Statistika",
-            "faculty": "Fakultas Matematika dan IPA"
-          }
-        ]
-      },
-      {
-        "rank": 2,
-        "confidence_score": 0.78,
-        "career_details": {
-          "career_id": "SWE-02",
-          "career_name": "Backend Engineer",
-          "category": "Software Engineering",
-          "description": "Fokus pada arsitektur peladen, pengelolaan basis data, dan performa API."
-        },
-        "recommended_majors": [
-          {
-            "major_id": "MAJ-03",
+            "major_id": "MAJ-002",
             "major_name": "Teknik Informatika",
             "faculty": "Fakultas Teknik"
           }
         ]
       },
       {
-        "rank": 3,
-        "confidence_score": 0.72,
-        "career_details": {
-          "career_id": "DES-01",
-          "career_name": "UI/UX Researcher",
-          "category": "Design",
-          "description": "Menganalisis kebutuhan pengguna untuk merancang antarmuka yang intuitif."
-        },
-        "recommended_majors": [
+        "career_id": "CAR-001",
+        "career_name": "Data Scientist",
+        "category": "Technology & Data",
+        "description": "Menganalisis data mentah menjadi wawasan strategis menggunakan algoritma, model prediktif, dan statistik.",
+        "match_rank": 2,
+        "confidence_score": 0.88,
+        "related_majors": [
           {
-            "major_id": "MAJ-04",
-            "major_name": "Sistem Informasi",
-            "faculty": "Fakultas Ilmu Komputer"
+            "major_id": "MAJ-001",
+            "major_name": "Sains Data",
+            "faculty": "Fakultas Teknologi Informasi"
           },
           {
-            "major_id": "MAJ-05",
-            "major_name": "Psikologi",
-            "faculty": "Fakultas Psikologi"
+            "major_id": "MAJ-002",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-006",
+        "career_name": "Arsitek",
+        "category": "Teknik & Desain Ruang",
+        "description": "Merancang tata letak dan struktur bangunan yang estetis, fungsional, serta memperhitungkan ketepatan matematis dan tata ruang.",
+        "match_rank": 3,
+        "confidence_score": 0.76,
+        "related_majors": [
+          {
+            "major_id": "MAJ-007",
+            "major_name": "Arsitektur",
+            "faculty": "Fakultas Teknik"
           }
         ]
       }
@@ -531,14 +520,19 @@ Mengambil daftar lengkap jalur karier dan jurusan yang didukung oleh sistem.
   "message": "Career catalog retrieved successfully",
   "data": [
     {
-      "career_id": "car-001",
-      "career_name": "Software Engineer",
-      "category": "Technology"
+      "career_id": "CAR-001",
+      "career_name": "Data Scientist",
+      "category": "Technology & Data"
     },
     {
-      "career_id": "car-002",
-      "career_name": "Data Scientist",
-      "category": "Data"
+      "career_id": "CAR-002",
+      "career_name": "Software Engineer",
+      "category": "Software Engineering"
+    },
+    {
+      "career_id": "CAR-003",
+      "career_name": "Dokter Umum",
+      "category": "Kesehatan & Medis"
     }
   ]
 }
