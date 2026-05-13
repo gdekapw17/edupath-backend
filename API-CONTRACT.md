@@ -249,24 +249,21 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
 
 ```json
 {
-  "academic_scores": {
-    "science": {
-      "math": 80,
-      "physics": 80,
-      "chemistry": 75,
-      "biology": 70
-    },
-    "social": {
-      "history": 70,
-      "geography": 65,
-      "english": 75
-    }
-  },
-  "behavioral_metrics": {
-    "weekly_study_hours": 10,
-    "absence_days": 2,
-    "extracurricular": "Tidak Ada"
-  }
+  "user_id": "uuid-v4-string",
+  "math_score": 85.0,
+  "physics_score": 80.0,
+  "chemistry_score": 78.0,
+  "biology_score": 72.0,
+  "history_score": 68.0,
+  "english_score": 75.0,
+  "geography_score": 70.0,
+  "weekly_self_study_hours": 20,
+  "absence_days": 3,
+  "science_avg": 78.75,
+  "social_avg": 71.0,
+  "overall_score": 75.4,
+  "part_time_job": false,
+  "extracurricular": true
 }
 ```
 
@@ -412,73 +409,120 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
 ```json
 {
   "success": true,
-  "message": "Recommendation retrieved successfully",
+  "message": "Recommendation detail retrieved successfully",
   "data": {
-    "user_details": {
-      "full_name": "Alex Pratama",
-      "school_name": "SMA Negeri 8 Jakarta"
-    },
-    "recommendation_info": {
-      "recommendation_id": "550e8400-e29b-41d4-a716-446655440000",
-      "created_at": "2026-05-03T20:30:00Z"
-    },
-    "ai_summary": "Alex memiliki kemampuan berpikir komputasional dan determinasi yang sangat menonjol. Ia memiliki ketertarikan alami dalam memecahkan masalah kompleks berbasis data",
-    "cognitive_profile": [
-      { "subject": "Logika & Analitik", "value": 88 },
-      { "subject": "Literasi Sains", "value": 82 },
-      { "subject": "Wawasan Sosial", "value": 75 },
-      { "subject": "Komunikasi Verbal", "value": 80 },
-      { "subject": "Manajemen Diri", "value": 90 },
-      { "subject": "Interpersonal", "value": 85 }
-    ],
+    "recommendation_id": "rec-uuid-v4",
+    "assessment_id": "assess-uuid-v4",
+    "ai_summary": "Berdasarkan analisis, siswa sangat direkomendasikan untuk masuk ke bidang Teknologi & Komputasi.",
+    "created_at": "2026-05-12T10:00:00Z",
     "career_matches": [
       {
-        "career_id": "CAR-002",
-        "career_name": "Software Engineer",
-        "category": "Software Engineering",
-        "description": "Membangun arsitektur perangkat lunak, peladen, dan sistem aplikasi yang dapat diskalakan dan berkinerja tinggi.",
+        "career_id": "CAR-003",
+        "career_name": "Accountant",
+        "category": "Profesional & Keuangan",
+        "description": "Mengelola dan memeriksa laporan keuangan untuk memastikan akurasi dan kepatuhan pajak.",
         "match_rank": 1,
-        "confidence_score": 0.95,
+        "confidence_score": 0.415,
         "related_majors": [
           {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
+            "major_id": "MAJ-003",
+            "major_name": "Akuntansi",
+            "faculty": "Fakultas Ekonomi dan Bisnis"
           }
         ]
       },
       {
-        "career_id": "CAR-001",
-        "career_name": "Data Scientist",
-        "category": "Technology & Data",
-        "description": "Menganalisis data mentah menjadi wawasan strategis menggunakan algoritma, model prediktif, dan statistik.",
+        "career_id": "CAR-004",
+        "career_name": "Financial Analyst",
+        "category": "Profesional & Keuangan",
+        "description": "Menganalisis data keuangan untuk membantu perusahaan dalam pengambilan keputusan investasi.",
         "match_rank": 2,
-        "confidence_score": 0.88,
+        "confidence_score": 0.415,
         "related_majors": [
+          {
+            "major_id": "MAJ-003",
+            "major_name": "Akuntansi",
+            "faculty": "Fakultas Ekonomi dan Bisnis"
+          },
           {
             "major_id": "MAJ-001",
             "major_name": "Sains Data",
             "faculty": "Fakultas Teknologi Informasi"
-          },
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-005",
+        "career_name": "Medical Doctor",
+        "category": "Sains & Kedokteran",
+        "description": "Mendiagnosis dan mengobati penyakit serta memberikan perawatan medis kepada pasien.",
+        "match_rank": 3,
+        "confidence_score": 0.267,
+        "related_majors": [
           {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
+            "major_id": "MAJ-010",
+            "major_name": "Kedokteran",
+            "faculty": "Fakultas Kedokteran"
           }
         ]
       },
       {
         "career_id": "CAR-006",
-        "career_name": "Arsitek",
-        "category": "Teknik & Desain Ruang",
-        "description": "Merancang tata letak dan struktur bangunan yang estetis, fungsional, serta memperhitungkan ketepatan matematis dan tata ruang.",
-        "match_rank": 3,
-        "confidence_score": 0.76,
+        "career_name": "Biologist",
+        "category": "Sains & Kedokteran",
+        "description": "Mempelajari organisme hidup dan hubungannya dengan lingkungan melalui penelitian laboratorium.",
+        "match_rank": 4,
+        "confidence_score": 0.267,
         "related_majors": [
           {
-            "major_id": "MAJ-007",
-            "major_name": "Arsitektur",
-            "faculty": "Fakultas Teknik"
+            "major_id": "MAJ-005",
+            "major_name": "Biologi",
+            "faculty": "Fakultas Matematika dan Ilmu Pengetahuan Alam"
+          },
+          {
+            "major_id": "MAJ-010",
+            "major_name": "Kedokteran",
+            "faculty": "Fakultas Kedokteran"
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-011",
+        "career_name": "Teacher",
+        "category": "Sosial & Layanan Publik",
+        "description": "Mendidik dan membimbing siswa dalam penguasaan materi pelajaran dan pengembangan karakter.",
+        "match_rank": 5,
+        "confidence_score": 0.229,
+        "related_majors": [
+          {
+            "major_id": "MAJ-004",
+            "major_name": "Sastra Inggris",
+            "faculty": "Fakultas Ilmu Budaya"
+          },
+          {
+            "major_id": "MAJ-009",
+            "major_name": "Psikologi",
+            "faculty": "Fakultas Psikologi"
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-012",
+        "career_name": "Social Worker",
+        "category": "Sosial & Layanan Publik",
+        "description": "Membantu individu atau kelompok dalam mengatasi masalah sosial dan meningkatkan kesejahteraan hidup.",
+        "match_rank": 6,
+        "confidence_score": 0.229,
+        "related_majors": [
+          {
+            "major_id": "MAJ-009",
+            "major_name": "Psikologi",
+            "faculty": "Fakultas Psikologi"
+          },
+          {
+            "major_id": "MAJ-006",
+            "major_name": "Hukum",
+            "faculty": "Fakultas Hukum"
           }
         ]
       }

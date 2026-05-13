@@ -18,7 +18,7 @@ Sistem ini dibangun menggunakan arsitektur modern dan efisien untuk memastikan r
 
 Struktur basis data dirancang secara relasional untuk memastikan integritas data tanpa redundansi.
 
-![Desain ERD EduPath](docs/assets/erd-edupath-v1.svg)
+![Desain ERD EduPath](docs/assets/erd-edupath-v2.svg)
 
 _(Catatan: Diagram di atas diekspor langsung dari skema rancangan DBML kami)._
 
