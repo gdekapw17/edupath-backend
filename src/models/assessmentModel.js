@@ -86,3 +86,16 @@ export const getAssessmentHistory = async (userId) => {
 
   return result.rows;
 };
+
+/**
+ * Mengambil detail asesmen lengkap berdasarkan ID.
+ */
+export const getAssessmentDetailById = async (assessmentId, userId) => {
+  const sql = `
+    SELECT *
+    FROM assessments
+    WHERE assessment_id = $1 AND user_id = $2
+  `;
+  const result = await pool.query(sql, [assessmentId, userId]);
+  return result.rows[0];
+};

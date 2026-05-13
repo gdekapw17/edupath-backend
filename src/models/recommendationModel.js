@@ -45,7 +45,7 @@ export const saveRecommendation = async (assessmentId, aiData) => {
       RETURNING recommendation_id, assessment_id, created_at
     `;
 
-    const summaryText = `Berdasarkan analisis AI, kamu memiliki potensi besar di bidang ${aiData.top_category}, diikuti oleh ${aiData.all_recommendations[1].group}.`;
+    const summaryText = `Berdasarkan analisis AI, kamu memiliki potensi besar di bidang ${aiData.top_category}, diikuti oleh ${aiData.all_recommendations[1].group} dan ${aiData.all_recommendations[2].group}.`;
 
     const recResult = await client.query(insertRecSql, [
       assessmentId,
