@@ -8,16 +8,44 @@ import {
  * Mengembalikan nama mata pelajaran pertama yang nilainya tidak valid,
  * atau null jika semuanya lolos validasi.
  */
-const validateScores = (scores) => {
-  for (const category in scores) {
-    for (const subject in scores[category]) {
-      const value = scores[category][subject];
+const validateMetrics = (data) => {
+  const scoreFields = [
+    "math_score",
+    "physics_score",
+    "chemistry_score",
+    "biology_score",
+    "history_score",
+    "english_score",
+    "geography_score",
+    "science_avg",
+    "social_avg",
+    "overall_score",
+  ];
 
-      if (typeof value !== "number" || value < 0 || value > 100) {
-        return subject;
-      }
+  for (const field of scoreFields) {
+    const value = data[field];
+    if (typeof value !== "number" || value < 0 || value > 100) {
+      return `The value of ${field} must be a number between 0 and 100.`;
     }
   }
+
+  if (
+    typeof data.weekly_self_study_hours !== "number" ||
+    data.weekly_self_study_hours < 0
+  ) {
+    return "Self-study hours must be a positive number.";
+  }
+  if (typeof data.absence_days !== "number" || data.absence_days < 0) {
+    return "The number of days absent must be a positive number.";
+  }
+
+  if (
+    typeof data.part_time_job !== "boolean" ||
+    typeof data.extracurricular !== "boolean"
+  ) {
+    return "Part_time_job and extracurricular status must be true or false.";
+  }
+
   return null;
 };
 
@@ -28,9 +56,24 @@ const validateScores = (scores) => {
 export const submitAssessment = async (req, res) => {
   try {
     const { userId } = req.user;
-    const { academic_scores, behavioral_metrics } = req.body;
+    const {
+      math_score,
+      physics_score,
+      chemistry_score,
+      biology_score,
+      history_score,
+      english_score,
+      geography_score,
+      weekly_self_study_hours,
+      absence_days,
+      science_avg,
+      social_avg,
+      overall_score,
+      part_time_job,
+      extracurricular,
+    } = req.body;
 
-    if (!academic_scores || !behavioral_metrics) {
+    if (math_score === undefined || weekly_self_study_hours === undefined) {
       return res.status(400).json({
         success: false,
         message: "Validation failed",
@@ -38,28 +81,42 @@ export const submitAssessment = async (req, res) => {
         error: {
           code: "VALIDATION_ERROR",
           details:
-            "The 'academic_scores' and 'behavioral_metrics' fields are required.",
+            "Make sure all 14 metric fields (math_score to extracurricular) are sent in the request.",
         },
       });
     }
 
-    const invalidSubject = validateScores(academic_scores);
+    const assessmentData = {
+      math_score,
+      physics_score,
+      chemistry_score,
+      biology_score,
+      history_score,
+      english_score,
+      geography_score,
+      weekly_self_study_hours,
+      absence_days,
+      science_avg,
+      social_avg,
+      overall_score,
+      part_time_job,
+      extracurricular,
+    };
 
-    if (invalidSubject) {
-      return res.status(422).json({
+    const validationError = validateMetrics(assessmentData);
+    if (validationError) {
+      return res.status(400).json({
         success: false,
         message: "Validation failed",
         data: null,
         error: {
-          code: "OUT_OF_RANGE",
-          details: `Academic scores must be between 0 and 100. Invalid value found in '${invalidSubject}'.`,
+          code: "VALIDATION_ERROR",
+          details: validationError,
         },
       });
     }
 
-    const rawData = { academic_scores, behavioral_metrics };
-
-    const newAssessment = await createAssessment(userId, rawData);
+    const newAssessment = await createAssessment(userId, assessmentData);
 
     return res.status(201).json({
       success: true,

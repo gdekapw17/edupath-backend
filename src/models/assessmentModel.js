@@ -8,22 +8,43 @@ import pool from "../config/database.js";
  * @param {object} rawData - Objek JSON berisi academic_scores dan behavioral_metrics
  * @returns {object} - Mengembalikan data asesmen yang baru dibuat
  */
-export const createAssessment = async (userId, rawData) => {
+export const createAssessment = async (userId, data) => {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
     const insertAssessmentSql = `
-      INSERT INTO assessments (user_id, raw_data, created_at)
-      VALUES ($1, $2, NOW())
+    INSERT INTO assessments (
+        user_id, math_score, physics_score, chemistry_score, biology_score, 
+        history_score, english_score, geography_score, 
+        weekly_self_study_hours, absence_days, 
+        science_avg, social_avg, overall_score, 
+        part_time_job, extracurricular, created_at
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())
       RETURNING assessment_id, user_id, created_at
     `;
 
-    const assessmentResult = await client.query(insertAssessmentSql, [
+    const values = [
       userId,
-      rawData,
-    ]);
+      data.math_score,
+      data.physics_score,
+      data.chemistry_score,
+      data.biology_score,
+      data.history_score,
+      data.english_score,
+      data.geography_score,
+      data.weekly_self_study_hours,
+      data.absence_days,
+      data.science_avg,
+      data.social_avg,
+      data.overall_score,
+      data.part_time_job,
+      data.extracurricular,
+    ];
+
+    const assessmentResult = await client.query(insertAssessmentSql, values);
 
     const newAssessment = assessmentResult.rows[0];
 
