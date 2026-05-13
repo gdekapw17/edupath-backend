@@ -1,7 +1,8 @@
-import { mockPredictCareer } from "../services/aiService.js";
+import { predictCareer } from "../services/aiService.js";
 import {
   saveRecommendation,
   getRecommendationById,
+  getAssessmentById,
 } from "../models/recommendationModel.js";
 
 export const generatePrediction = async (req, res) => {
@@ -20,7 +21,21 @@ export const generatePrediction = async (req, res) => {
       });
     }
 
-    const aiPrediction = await mockPredictCareer(assessment_id);
+    const studentData = await getAssessmentById(assessment_id);
+
+    if (!studentData) {
+      return res.status(404).json({
+        success: false,
+        message: "Assessment data not found",
+        data: null,
+        error: {
+          code: "NOT_FOUND",
+          details: "No assessment record matches the provided ID.",
+        },
+      });
+    }
+
+    const aiPrediction = await predictCareer(studentData);
 
     const result = await saveRecommendation(assessment_id, aiPrediction);
 
