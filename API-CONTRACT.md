@@ -249,7 +249,6 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
 
 ```json
 {
-  "user_id": "uuid-v4-string",
   "math_score": 85.0,
   "physics_score": 80.0,
   "chemistry_score": 78.0,
@@ -259,9 +258,6 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
   "geography_score": 70.0,
   "weekly_self_study_hours": 20,
   "absence_days": 3,
-  "science_avg": 78.75,
-  "social_avg": 71.0,
-  "overall_score": 75.4,
   "part_time_job": false,
   "extracurricular": true
 }
@@ -316,6 +312,56 @@ Mengambil riwayat asesmen yang pernah diisi oleh siswa.
       "status": "processed"
     }
   ]
+}
+```
+
+### 3.3. Get Assessment Detail
+
+Mengambil detail data asesmen spesifik yang pernah diisi oleh siswa secara lengkap, termasuk nilai rata-rata (science_avg, social_avg, overall_score) yang telah dikalkulasi oleh sistem.
+
+- **Endpoint:** `GET /assessments/{id}`
+- **Access:** Private
+- **Headers:** `Authorization: Bearer <access_token>`
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Assessment detail retrieved successfully",
+  "data": {
+    "assessment_id": "assess-uuid-v4",
+    "user_id": "uuid-v4-string",
+    "math_score": 85.0,
+    "physics_score": 80.0,
+    "chemistry_score": 78.0,
+    "biology_score": 72.0,
+    "history_score": 68.0,
+    "english_score": 75.0,
+    "geography_score": 70.0,
+    "weekly_self_study_hours": 20,
+    "absence_days": 3,
+    "science_avg": 76.67,
+    "social_avg": 69.0,
+    "overall_score": 75.43,
+    "part_time_job": false,
+    "extracurricular": true,
+    "created_at": "2026-05-13T12:00:00Z"
+  }
+}
+```
+
+**Error Response (404 Not Found - Assessment Missing):**
+
+```json
+{
+  "success": false,
+  "message": "Assessment detail not found",
+  "data": null,
+  "error": {
+    "code": "NOT_FOUND",
+    "details": "No assessment record matches the provided ID for this user."
+  }
 }
 ```
 
