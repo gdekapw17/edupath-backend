@@ -43,6 +43,7 @@ CREATE TABLE recommendations (
     recommendation_id VARCHAR(50) PRIMARY KEY,
     assessment_id VARCHAR(50) REFERENCES assessments(assessment_id) ON DELETE CASCADE,
     ai_summary TEXT,
+    ai_explanation JSONB,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

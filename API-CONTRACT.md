@@ -459,21 +459,73 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
   "data": {
     "recommendation_id": "rec-uuid-v4",
     "assessment_id": "assess-uuid-v4",
-    "ai_summary": "Berdasarkan analisis, siswa sangat direkomendasikan untuk masuk ke bidang Teknologi & Komputasi.",
-    "created_at": "2026-05-12T10:00:00Z",
+    "ai_summary": "Berdasarkan analisis AI, kamu memiliki potensi besar di bidang Sains & Kedokteran, diikuti oleh Profesional & Keuangan dan Teknologi & Komputasi.",
+    "ai_explanation": {
+      "saran": "Untuk mempersiapkan diri masuk Kedokteran, kamu perlu meningkatkan nilai Fisika dan memperbanyak jam belajar (saat ini 40 jam/minggu). Pastikan kamu juga memantau absen dan menghadiri kelas sains secara teratur. Jangan ragu untuk mencari informasi lebih lanjut tentang proses penerimaan mahasiswa baru di fakultas kedokteran.",
+      "alasan": "Profil kamu sangat cocok dengan Sains & Kedokteran karena nilai Matematika yang tinggi (92) dan kemampuan di bidang sains lainnya seperti Biologi (72) dan Kimia (78). Nilai Fisika (60) perlu ditingkatkan, namun secara keseluruhan kamu memiliki potensi besar di bidang sains.",
+      "kekuatan": "Kekuatan akademik utama kamu terletak pada kemampuan bahasa Inggris yang sangat baik (95) dan kemampuan di bidang sains. Ini akan sangat membantu dalam memahami konsep-konsep medis yang kompleks.",
+      "referensi": [
+        {
+          "url": "https://fk.ui.ac.id",
+          "title": "FK Universitas Indonesia",
+          "keterangan": "Informasi tentang program studi dan penerimaan mahasiswa baru"
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov",
+          "title": "PubMed — Literatur Medis Internasional",
+          "keterangan": "Sumber literatur medis terpercaya untuk memperluas pengetahuan"
+        }
+      ]
+    },
+    "created_at": "2026-05-18T04:00:49.979Z",
     "career_matches": [
       {
-        "career_id": "CAR-003",
-        "career_name": "Accountant",
-        "category": "Profesional & Keuangan",
-        "description": "Mengelola dan memeriksa laporan keuangan untuk memastikan akurasi dan kepatuhan pajak.",
+        "career_id": "CAR-001",
+        "career_name": "Data Scientist",
+        "category": "Sains & Kedokteran",
+        "description": "Menganalisis data mentah menjadi wawasan strategis menggunakan algoritma, model prediktif, dan statistik.",
         "match_rank": 1,
-        "confidence_score": 0.415,
+        "confidence_score": 99.91,
+        "related_majors": [
+          {
+            "major_id": "MAJ-001",
+            "major_name": "Sains Data",
+            "faculty": "Fakultas Teknologi Informasi"
+          },
+          {
+            "major_id": "MAJ-002",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-003",
+        "career_name": "Dokter Umum",
+        "category": "Sains & Kedokteran",
+        "description": "Mendiagnosis, merawat, dan mencegah penyakit serta cedera pada pasien secara umum.",
+        "match_rank": 2,
+        "confidence_score": 99.91,
         "related_majors": [
           {
             "major_id": "MAJ-003",
-            "major_name": "Akuntansi",
-            "faculty": "Fakultas Ekonomi dan Bisnis"
+            "major_name": "Pendidikan Dokter",
+            "faculty": "Fakultas Kedokteran"
+          }
+        ]
+      },
+      {
+        "career_id": "CAR-002",
+        "career_name": "Software Engineer",
+        "category": "Profesional & Keuangan",
+        "description": "Membangun arsitektur perangkat lunak, peladen, dan sistem aplikasi yang dapat diskalakan dan berkinerja tinggi.",
+        "match_rank": 3,
+        "confidence_score": 0.09,
+        "related_majors": [
+          {
+            "major_id": "MAJ-002",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
           }
         ]
       },
@@ -481,94 +533,49 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
         "career_id": "CAR-004",
         "career_name": "Financial Analyst",
         "category": "Profesional & Keuangan",
-        "description": "Menganalisis data keuangan untuk membantu perusahaan dalam pengambilan keputusan investasi.",
-        "match_rank": 2,
-        "confidence_score": 0.415,
+        "description": "Menganalisis data keuangan dan tren pasar untuk membantu perusahaan membuat keputusan investasi yang tepat.",
+        "match_rank": 4,
+        "confidence_score": 0.09,
         "related_majors": [
           {
-            "major_id": "MAJ-003",
+            "major_id": "MAJ-004",
             "major_name": "Akuntansi",
             "faculty": "Fakultas Ekonomi dan Bisnis"
           },
           {
-            "major_id": "MAJ-001",
-            "major_name": "Sains Data",
-            "faculty": "Fakultas Teknologi Informasi"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-005",
-        "career_name": "Medical Doctor",
-        "category": "Sains & Kedokteran",
-        "description": "Mendiagnosis dan mengobati penyakit serta memberikan perawatan medis kepada pasien.",
-        "match_rank": 3,
-        "confidence_score": 0.267,
-        "related_majors": [
-          {
-            "major_id": "MAJ-010",
-            "major_name": "Kedokteran",
-            "faculty": "Fakultas Kedokteran"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-006",
-        "career_name": "Biologist",
-        "category": "Sains & Kedokteran",
-        "description": "Mempelajari organisme hidup dan hubungannya dengan lingkungan melalui penelitian laboratorium.",
-        "match_rank": 4,
-        "confidence_score": 0.267,
-        "related_majors": [
-          {
             "major_id": "MAJ-005",
-            "major_name": "Biologi",
-            "faculty": "Fakultas Matematika dan Ilmu Pengetahuan Alam"
-          },
-          {
-            "major_id": "MAJ-010",
-            "major_name": "Kedokteran",
-            "faculty": "Fakultas Kedokteran"
+            "major_name": "Manajemen",
+            "faculty": "Fakultas Ekonomi dan Bisnis"
           }
         ]
       },
       {
-        "career_id": "CAR-011",
-        "career_name": "Teacher",
-        "category": "Sosial & Layanan Publik",
-        "description": "Mendidik dan membimbing siswa dalam penguasaan materi pelajaran dan pengembangan karakter.",
+        "career_id": "CAR-007",
+        "career_name": "Game Developer",
+        "category": "Teknologi & Komputasi",
+        "description": "Merancang dan mengembangkan mekanik, logika, dan interaktivitas dalam permainan digital.",
         "match_rank": 5,
-        "confidence_score": 0.229,
+        "confidence_score": 0,
         "related_majors": [
           {
-            "major_id": "MAJ-004",
-            "major_name": "Sastra Inggris",
-            "faculty": "Fakultas Ilmu Budaya"
-          },
-          {
-            "major_id": "MAJ-009",
-            "major_name": "Psikologi",
-            "faculty": "Fakultas Psikologi"
+            "major_id": "MAJ-002",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
           }
         ]
       },
       {
-        "career_id": "CAR-012",
-        "career_name": "Social Worker",
-        "category": "Sosial & Layanan Publik",
-        "description": "Membantu individu atau kelompok dalam mengatasi masalah sosial dan meningkatkan kesejahteraan hidup.",
+        "career_id": "CAR-008",
+        "career_name": "Cloud Engineer",
+        "category": "Teknologi & Komputasi",
+        "description": "Mengelola dan merancang infrastruktur komputasi awan yang aman dan optimal.",
         "match_rank": 6,
-        "confidence_score": 0.229,
+        "confidence_score": 0,
         "related_majors": [
           {
-            "major_id": "MAJ-009",
-            "major_name": "Psikologi",
-            "faculty": "Fakultas Psikologi"
-          },
-          {
-            "major_id": "MAJ-006",
-            "major_name": "Hukum",
-            "faculty": "Fakultas Hukum"
+            "major_id": "MAJ-002",
+            "major_name": "Teknik Informatika",
+            "faculty": "Fakultas Teknik"
           }
         ]
       }

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /**
  * Layanan integrasi AI untuk aplikasi Edupath.
  * Mengirimkan data akademik dan kebiasaan siswa ke layanan Machine Learning (FastAPI)
@@ -26,31 +28,31 @@ export const predictCareer = async (studentData) => {
     };
 
     const mlApiUrl =
-      process.env.ML_SERVICE_URL || "http://127.0.0.1:8000/predict";
+      process.env.ML_SERVICE_URL || "http://127.0.0.1:8000/explain";
 
-    const mlResponse = await fetch(mlApiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const response = await axios.post(mlApiUrl, payload);
 
-    if (!mlResponse.ok) {
-      throw new Error(
-        `Failed to connect to ML Service. Status: ${mlResponse.status}`
-      );
-    }
-
-    const mlData = await mlResponse.json();
+    const mlData = response.data;
 
     return {
       top_category: mlData.top_group,
       confidence_score: mlData.confidence,
       all_recommendations: mlData.recommendations,
+      explanation: mlData.explanation,
     };
   } catch (error) {
-    console.error("AI Service Integration Error,", error.message);
-    throw error;
+    if (error.response) {
+      console.error(
+        `ML Service Error [${error.response.status}]:`,
+        error.response.data
+      );
+    } else if (error.request) {
+      console.error(
+        "ML Service Error: No response received from ML Server. Is it running?"
+      );
+    } else {
+      console.error("AI Service Integration Error:", error.message);
+    }
+    throw new Error("Failed to communicate with AI ML service");
   }
 };

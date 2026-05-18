@@ -40,8 +40,8 @@ export const saveRecommendation = async (assessmentId, aiData) => {
     await client.query("BEGIN");
 
     const insertRecSql = `
-      INSERT INTO recommendations (assessment_id, ai_summary, created_at)
-      VALUES ($1, $2, NOW())
+      INSERT INTO recommendations (assessment_id, ai_summary, ai_explanation, created_at)
+      VALUES ($1, $2, $3, NOW())
       RETURNING recommendation_id, assessment_id, created_at
     `;
 
@@ -50,6 +50,7 @@ export const saveRecommendation = async (assessmentId, aiData) => {
     const recResult = await client.query(insertRecSql, [
       assessmentId,
       summaryText,
+      aiData.explanation,
     ]);
 
     const newRecommendation = recResult.rows[0];
@@ -106,6 +107,7 @@ export const getRecommendationById = async (recommendationId) => {
       r.recommendation_id, 
       r.assessment_id, 
       r.ai_summary, 
+      r.ai_explanation,
       r.created_at,
       rc.career_id, 
       c.career_name, 
@@ -140,6 +142,7 @@ export const getRecommendationById = async (recommendationId) => {
     recommendation_id: parentData.recommendation_id,
     assessment_id: parentData.assessment_id,
     ai_summary: parentData.ai_summary,
+    ai_explanation: parentData.ai_explanation,
     created_at: parentData.created_at,
     career_matches: result.rows.map((row) => ({
       career_id: row.career_id,
