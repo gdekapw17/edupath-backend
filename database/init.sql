@@ -113,13 +113,22 @@ INSERT INTO careers (career_id, career_name, category, description) VALUES
 ('CAR-012', 'Pengajar / Guru', 'Sosial & Layanan Publik', 'Mendidik, membimbing, dan mengevaluasi perkembangan peserta didik.');
 
 -- Seed Relasi Career - Majors
-INSERT INTO career_majors (career_id, major_id) VALUES
+INSERT INTO career_majors (career_id, major_id)
+VALUES
 ('CAR-001', 'MAJ-001'),
+('CAR-001', 'MAJ-002'),
 ('CAR-002', 'MAJ-002'),
 ('CAR-003', 'MAJ-003'),
-('CAR-004', 'MAJ-003'),
-('CAR-005', 'MAJ-010'), 
-('CAR-006', 'MAJ-005'),
+('CAR-004', 'MAJ-004'),
+('CAR-004', 'MAJ-005'),
+('CAR-005', 'MAJ-005'),
+('CAR-005', 'MAJ-006'),
+('CAR-006', 'MAJ-007'),
+('CAR-007', 'MAJ-002'),
+('CAR-008', 'MAJ-002'),
+('CAR-009', 'MAJ-005'),
+('CAR-009', 'MAJ-011'),
+('CAR-010', 'MAJ-008'),
 ('CAR-011', 'MAJ-009'),
 ('CAR-012', 'MAJ-010');
 
