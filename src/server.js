@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import pool, { testConnection } from "./config/database.js";
+import { generalLimiter } from "./middlewares/rateLimiter.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
@@ -23,6 +24,9 @@ app.get("/", (req, res) => {
     message: "Welcome to EduPath API!",
   });
 });
+
+//--- Global Limiter ---
+app.use("/api", generalLimiter);
 
 // --- API Routes ---
 app.use("/api/v1/auth", authRoutes);
