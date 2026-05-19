@@ -5,49 +5,6 @@ import {
 } from "../models/assessmentModel.js";
 
 /**
- * Helper function: Memvalidasi rentang nilai akademik (0 - 100).
- * Mengembalikan nama mata pelajaran pertama yang nilainya tidak valid,
- * atau null jika semuanya lolos validasi.
- */
-const validateMetrics = (data) => {
-  const scoreFields = [
-    "math_score",
-    "physics_score",
-    "chemistry_score",
-    "biology_score",
-    "history_score",
-    "english_score",
-    "geography_score",
-  ];
-
-  for (const field of scoreFields) {
-    const value = data[field];
-    if (typeof value !== "number" || value < 0 || value > 100) {
-      return `The value of ${field} must be a number between 0 and 100.`;
-    }
-  }
-
-  if (
-    typeof data.weekly_self_study_hours !== "number" ||
-    data.weekly_self_study_hours < 0
-  ) {
-    return "Self-study hours must be a positive number.";
-  }
-  if (typeof data.absence_days !== "number" || data.absence_days < 0) {
-    return "The number of days absent must be a positive number.";
-  }
-
-  if (
-    typeof data.part_time_job !== "boolean" ||
-    typeof data.extracurricular !== "boolean"
-  ) {
-    return "Part_time_job and extracurricular status must be true or false.";
-  }
-
-  return null;
-};
-
-/**
  * Menyimpan data asesmen akademik dan perilaku siswa.
  * Endpoint: POST /assessments
  */
@@ -69,19 +26,6 @@ export const submitAssessment = async (req, res) => {
       extracurricular,
     } = req.body;
 
-    if (math_score === undefined || weekly_self_study_hours === undefined) {
-      return res.status(400).json({
-        success: false,
-        message: "Validation failed",
-        data: null,
-        error: {
-          code: "VALIDATION_ERROR",
-          details:
-            "Make sure all 14 metric fields (math_score to extracurricular) are sent in the request.",
-        },
-      });
-    }
-
     const inputData = {
       math_score,
       physics_score,
@@ -95,19 +39,6 @@ export const submitAssessment = async (req, res) => {
       part_time_job,
       extracurricular,
     };
-
-    const validationError = validateMetrics(inputData);
-    if (validationError) {
-      return res.status(400).json({
-        success: false,
-        message: "Validation failed",
-        data: null,
-        error: {
-          code: "VALIDATION_ERROR",
-          details: validationError,
-        },
-      });
-    }
 
     const science_avg = Number(
       ((physics_score + chemistry_score + biology_score) / 3).toFixed(2)

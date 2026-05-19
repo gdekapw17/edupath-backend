@@ -9,7 +9,7 @@ export const aiPredictionLimiter = rateLimit({
   max: 10,
   message: {
     success: false,
-    message: "Terlalu banyak permintaan prediksi.",
+    message: "Too many prediction requests.",
     data: null,
     error: {
       code: "TOO_MANY_REQUESTS",

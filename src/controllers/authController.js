@@ -132,7 +132,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const expiresInSecond = 604800;
+    const expiresInSecond = 86400;
 
     const token = jwt.sign(
       {
