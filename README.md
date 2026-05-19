@@ -1,6 +1,6 @@
 # EduPath Backend API
 
-EduPath is an educational technology (EdTech) platform designed to help students discover their optimal career paths. The system analyzes a student's academic profile and learning behavior, integrating these metrics with an Artificial Intelligence (AI) prediction engine to generate accurate and personalized career recommendations.
+EduPath is an educational technology platform designed to help students discover their optimal career paths. The system analyzes a student's academic profile and learning behavior, integrating these metrics with an Artificial Intelligence (AI) prediction engine to generate accurate and personalized career recommendations.
 
 This repository contains the core backend service (RESTful API) that acts as the primary data orchestrator between the client interface, the main relational database, and the external AI prediction server.
 

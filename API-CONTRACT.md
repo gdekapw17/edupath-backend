@@ -278,8 +278,8 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
   "geography_score": 70.0,
   "weekly_self_study_hours": 20,
   "absence_days": 3,
-  "part_time_job": false,
-  "extracurricular": true
+  "part_time_job": true,
+  "extracurricular": false
 }
 ```
 
@@ -350,8 +350,8 @@ Mengambil detail data asesmen spesifik yang pernah diisi oleh siswa secara lengk
     "science_avg": 76.67,
     "social_avg": 69.0,
     "overall_score": 75.43,
-    "part_time_job": false,
-    "extracurricular": true,
+    "part_time_job": true,
+    "extracurricular": false,
     "created_at": "2026-05-13T12:00:00Z"
   }
 }
