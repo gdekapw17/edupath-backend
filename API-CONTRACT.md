@@ -13,11 +13,16 @@ Berlaku ketika ada field input yang kosong atau formatnya tidak sesuai (misal: f
 ```json
 {
   "success": false,
-  "message": "Validation failed",
+  "message": "Input validation failed",
   "data": null,
   "error": {
     "code": "VALIDATION_ERROR",
-    "details": "Deskripsi spesifik mengenai field mana yang salah."
+    "details": [
+      {
+        "field": "math_score",
+        "message": "Nilai Matematika tidak boleh lebih dari 100"
+      }
+    ]
   }
 }
 ```
@@ -33,6 +38,21 @@ Berlaku secara mutlak untuk seluruh endpoint yang memiliki status Access: Privat
   "error": {
     "code": "UNAUTHORIZED",
     "details": "Access token is missing, invalid, or has expired."
+  }
+}
+```
+
+**429 Too Many Request (Rate Limit Exceeded)**
+Berlaku jika IP pengguna melakukan spam request melebihi batas (terutama pada endpoint AI).
+
+```json
+{
+  "success": false,
+  "message": "Too many prediction requests.",
+  "data": null,
+  "error": {
+    "code": "TOO_MANY_REQUESTS",
+    "details": "The system has detected too many requests from your IP. Please try again after 15 minute"
   }
 }
 ```
@@ -131,7 +151,7 @@ Mengautentikasi pengguna dan mengembalikan token akses (JWT) yang akan digunakan
   "message": "Login successful",
   "data": {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5c...",
-    "expires_in": 604800,
+    "expires_in": 86400,
     "user": {
       "user_id": "uuid-v4-string",
       "email": "siswa@example.com",
@@ -277,20 +297,6 @@ Menyimpan data nilai akademik dan metrik perilaku siswa. Endpoint ini akan menge
 }
 ```
 
-**Error Response (422 Unprocessable Entity - Out of Range Data):**
-
-```json
-{
-  "success": false,
-  "message": "Validation failed",
-  "data": null,
-  "error": {
-    "code": "OUT_OF_RANGE",
-    "details": "Academic scores must be between 0 and 100. Invalid value found in 'math'."
-  }
-}
-```
-
 ### 3.2. Get Assessment History
 
 Mengambil riwayat asesmen yang pernah diisi oleh siswa.
@@ -414,16 +420,14 @@ Memicu proses inferensi ke peladen model AI.
 }
 ```
 
-**Error Response (409 Conflict - Already Predicted):**
+**Success Response (200 OK - Already Predicted):**
 
 ```json
 {
-  "success": false,
-  "message": "Prediction already exists",
-  "data": null,
-  "error": {
-    "code": "PREDICTION_ALREADY_EXISTS",
-    "details": "A prediction has already been generated for this assessment ID."
+  "success": true,
+  "message": "Prediction already exists for this assessment",
+  "data": {
+    "recommendation_id": "rec-uuid-v4"
   }
 }
 ```
@@ -461,19 +465,14 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
     "assessment_id": "assess-uuid-v4",
     "ai_summary": "Berdasarkan analisis AI, kamu memiliki potensi besar di bidang Sains & Kedokteran, diikuti oleh Profesional & Keuangan dan Teknologi & Komputasi.",
     "ai_explanation": {
-      "saran": "Untuk mempersiapkan diri masuk Kedokteran, kamu perlu meningkatkan nilai Fisika dan memperbanyak jam belajar (saat ini 40 jam/minggu). Pastikan kamu juga memantau absen dan menghadiri kelas sains secara teratur. Jangan ragu untuk mencari informasi lebih lanjut tentang proses penerimaan mahasiswa baru di fakultas kedokteran.",
-      "alasan": "Profil kamu sangat cocok dengan Sains & Kedokteran karena nilai Matematika yang tinggi (92) dan kemampuan di bidang sains lainnya seperti Biologi (72) dan Kimia (78). Nilai Fisika (60) perlu ditingkatkan, namun secara keseluruhan kamu memiliki potensi besar di bidang sains.",
-      "kekuatan": "Kekuatan akademik utama kamu terletak pada kemampuan bahasa Inggris yang sangat baik (95) dan kemampuan di bidang sains. Ini akan sangat membantu dalam memahami konsep-konsep medis yang kompleks.",
+      "alasan": "Profil kamu sangat cocok dengan Sains & Kedokteran karena nilai Matematika yang tinggi (92)...",
+      "kekuatan": "Kekuatan akademik utama kamu terletak pada kemampuan bahasa Inggris yang sangat baik (95)...",
+      "saran": "Untuk mempersiapkan diri, kamu perlu meningkatkan nilai Fisika...",
       "referensi": [
         {
-          "url": "https://fk.ui.ac.id",
           "title": "FK Universitas Indonesia",
-          "keterangan": "Informasi tentang program studi dan penerimaan mahasiswa baru"
-        },
-        {
-          "url": "https://pubmed.ncbi.nlm.nih.gov",
-          "title": "PubMed — Literatur Medis Internasional",
-          "keterangan": "Sumber literatur medis terpercaya untuk memperluas pengetahuan"
+          "url": "[https://fk.ui.ac.id](https://fk.ui.ac.id)",
+          "keterangan": "Informasi tentang program studi"
         }
       ]
     },
@@ -483,7 +482,7 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
         "career_id": "CAR-001",
         "career_name": "Data Scientist",
         "category": "Sains & Kedokteran",
-        "description": "Menganalisis data mentah menjadi wawasan strategis menggunakan algoritma, model prediktif, dan statistik.",
+        "description": "Menganalisis data mentah menjadi wawasan strategis.",
         "match_rank": 1,
         "confidence_score": 99.91,
         "related_majors": [
@@ -491,91 +490,6 @@ Mengambil hasil analisis penuh dari asesmen pengguna. Mengembalikan profil kogni
             "major_id": "MAJ-001",
             "major_name": "Sains Data",
             "faculty": "Fakultas Teknologi Informasi"
-          },
-          {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-003",
-        "career_name": "Dokter Umum",
-        "category": "Sains & Kedokteran",
-        "description": "Mendiagnosis, merawat, dan mencegah penyakit serta cedera pada pasien secara umum.",
-        "match_rank": 2,
-        "confidence_score": 99.91,
-        "related_majors": [
-          {
-            "major_id": "MAJ-003",
-            "major_name": "Pendidikan Dokter",
-            "faculty": "Fakultas Kedokteran"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-002",
-        "career_name": "Software Engineer",
-        "category": "Profesional & Keuangan",
-        "description": "Membangun arsitektur perangkat lunak, peladen, dan sistem aplikasi yang dapat diskalakan dan berkinerja tinggi.",
-        "match_rank": 3,
-        "confidence_score": 0.09,
-        "related_majors": [
-          {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-004",
-        "career_name": "Financial Analyst",
-        "category": "Profesional & Keuangan",
-        "description": "Menganalisis data keuangan dan tren pasar untuk membantu perusahaan membuat keputusan investasi yang tepat.",
-        "match_rank": 4,
-        "confidence_score": 0.09,
-        "related_majors": [
-          {
-            "major_id": "MAJ-004",
-            "major_name": "Akuntansi",
-            "faculty": "Fakultas Ekonomi dan Bisnis"
-          },
-          {
-            "major_id": "MAJ-005",
-            "major_name": "Manajemen",
-            "faculty": "Fakultas Ekonomi dan Bisnis"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-007",
-        "career_name": "Game Developer",
-        "category": "Teknologi & Komputasi",
-        "description": "Merancang dan mengembangkan mekanik, logika, dan interaktivitas dalam permainan digital.",
-        "match_rank": 5,
-        "confidence_score": 0,
-        "related_majors": [
-          {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
-          }
-        ]
-      },
-      {
-        "career_id": "CAR-008",
-        "career_name": "Cloud Engineer",
-        "category": "Teknologi & Komputasi",
-        "description": "Mengelola dan merancang infrastruktur komputasi awan yang aman dan optimal.",
-        "match_rank": 6,
-        "confidence_score": 0,
-        "related_majors": [
-          {
-            "major_id": "MAJ-002",
-            "major_name": "Teknik Informatika",
-            "faculty": "Fakultas Teknik"
           }
         ]
       }

@@ -1,62 +1,67 @@
 # EduPath Backend API
 
-EduPath adalah platform teknologi pendidikan yang dirancang untuk membantu siswa menemukan jalur karier yang tepat. Sistem ini menganalisis profil akademik dan perilaku belajar siswa, lalu mengintegrasikannya dengan mesin prediksi kecerdasan buatan (AI) untuk menghasilkan rekomendasi karier yang tepat.
+EduPath is an educational technology (EdTech) platform designed to help students discover their optimal career paths. The system analyzes a student's academic profile and learning behavior, integrating these metrics with an Artificial Intelligence (AI) prediction engine to generate accurate and personalized career recommendations.
 
-Repositori ini memuat layanan _backend_ utama (RESTful API) yang bertugas sebagai orkestrator data antara antarmuka klien (klien UI/UX), basis data utama, dan peladen model AI.
+This repository contains the core backend service (RESTful API) that acts as the primary data orchestrator between the client interface, the main relational database, and the external AI prediction server.
 
-## 🚀 Teknologi Utama
+## Tech Stack
 
-Sistem ini dibangun menggunakan arsitektur modern dan efisien untuk memastikan responsivitas tinggi:
+The system is built using a modern, efficient, and enterprise-grade architecture to ensure high responsiveness and robust security:
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
-- **Database Relasional:** PostgreSQL (menyimpan entitas pengguna, asesmen, dan riwayat rekomendasi)
-- **In-Memory Cache:** Redis (untuk optimalisasi pengambilan Master Data katalog karier)
-- **Autentikasi:** JSON Web Token (JWT)
+- **Relational Database:** PostgreSQL (stores user entities, assessments, and recommendation history, heavily optimized with indexing and `JSONB` data types)
+- **In-Memory Cache:** Redis (implemented for lightning-fast retrieval of cached recommendations)
+- **Authentication:** JSON Web Token (JWT)
+- **AI Integration:** Axios (communicating with external ML FastAPI) & Groq API (powered by LLaMA 3.3 for intelligent narrative explanation generation)
+- **Input Validation:** Zod (strict, centralized schema validation middleware)
+- **Security:** Express-Rate-Limit (DDoS protection and AI quota management)
 
-## 🗄️ Arsitektur Basis Data (ERD)
+## Database Architecture (ERD)
 
-Struktur basis data dirancang secara relasional untuk memastikan integritas data tanpa redundansi.
+The database structure is designed relationally to ensure data integrity without redundancy.
 
-![Desain ERD EduPath](docs/assets/erd-edupath-v2.svg)
+![EduPath ERD Design](docs/assets/erd-edupath-v2.svg)
 
-_(Catatan: Diagram di atas diekspor langsung dari skema rancangan DBML kami)._
+_(Note: The diagram above is exported directly from our DBML design schema)._
 
-## 📚 Dokumentasi API
+## Core API Modules
 
-Sistem backend ini terbagi menjadi 5 modul API utama:
+This backend system is divided into 5 main API modules:
 
-1. **Authentication Module:** Registrasi dan login pengguna.
-2. **User Profile Module:** Manajemen identitas dan data sekolah siswa.
-3. **Assessment Module:** Pencatatan skor akademik (Matematika, Fisika, dll) dan metrik perilaku (jam belajar mandiri, absensi).
-4. **Recommendation Module (AI Integration):** Penghubung (_proxy_) yang mengirimkan data asesmen ke peladen AI dan mengembalikan probabilitas karier.
-5. **Master Data Module:** Katalog referensi statis untuk jalur karier.
+1. **Authentication Module:** User registration and secure login.
+2. **User Profile Module:** Identity and student school data management.
+3. **Assessment Module:** Recording academic scores (Math, Physics, etc.) and behavioral metrics (self-study hours, absence days) with strict payload validation via Zod.
+4. **Recommendation Module (AI Integration):** A proxy that securely sends assessment data to the ML server, utilizes Groq API for analytical reasoning, prevents duplicate processing, and caches the final results using Redis. Protected by strict rate limiters.
+5. **Master Data Module:** Static reference catalog for career paths and majors.
 
-**Spesifikasi Teknis Lengkap:**
+**Full Technical Specifications:**
 
-- Detail kontrak API _request/response_ dapat dibaca pada file [`API-CONTRACT.md`](API-CONTRACT.md).
-- Koleksi interaktif Postman beserta simulasi _Mock Environment_ tersedia di dalam folder `docs/postman/`.
+- Detailed API request/response contracts can be found in the [`API-CONTRACT.md`](API-CONTRACT.md) file.
 
-## 🛠️ Panduan Instalasi Lokal
+## Local Installation Guide
 
-Untuk menjalankan peladen pengembangan di mesin lokal, ikuti langkah-langkah berikut:
+To run the development server on your local machine, follow these steps:
 
-1. **Kloning Repositori**
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/gdekapw17/edupath-backend.git
    cd EduPath-Backend
    ```
-2. **Instalasi Dependensi**
+1. **Install Dependencies**
    ```bash
    npm install
    ```
-3. **Konfigurasi Environment**
-   Salin file konfigurasi bawaan dan sesuaikan nilainya dengan kredensial PostgreSQL dan rahasia JWT milikmu.
+1. **Environment Configuration**
+
+   Copy the sample configuration file and adjust the values with your PostgreSQL credentials, JWT secret, Redis URL, and Groq API Key.
+
    ```bash
    cp .env.example .env
    ```
-4. **Jalankan Peladen**
+
+1. **Run the Server**
    ```bash
    npm run dev
    ```
-   Peladen akan berjalan di http://localhost:3000/api/v1.
+   The server will run on http://localhost:3000/api/v1.
