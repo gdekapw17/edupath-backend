@@ -43,6 +43,12 @@ export const saveRecommendation = async (
   try {
     await client.query("BEGIN");
 
+    if (!aiData || !aiData.all_recommendations) {
+      throw new Error(
+        "The response format from the AI ​​service is invalid or empty."
+      );
+    }
+
     const insertRecSql = `
       INSERT INTO recommendations (recommendation_id, assessment_id, ai_summary, ai_explanation, created_at)
       VALUES ($1, $2, $3, $4, NOW())
@@ -73,7 +79,6 @@ export const saveRecommendation = async (
 
       for (let j = 0; j < careersQuery.rows.length; j++) {
         const career = careersQuery.rows[j];
-
         const globalRank = (aiRec.rank - 1) * 2 + (j + 1);
 
         await client.query(insertCareerSql, [
@@ -90,7 +95,6 @@ export const saveRecommendation = async (
     return { recommendation_id: recommendationId, ...newRecommendation };
   } catch (error) {
     await client.query("ROLLBACK");
-
     throw error;
   } finally {
     client.release();
