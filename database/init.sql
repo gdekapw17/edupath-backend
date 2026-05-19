@@ -86,22 +86,31 @@ CREATE TABLE recommendation_careers (
 INSERT INTO majors (major_id, major_name, faculty) VALUES
 ('MAJ-001', 'Sains Data', 'Fakultas Teknologi Informasi'),
 ('MAJ-002', 'Teknik Informatika', 'Fakultas Teknik'),
-('MAJ-003', 'Akuntansi', 'Fakultas Ekonomi dan Bisnis'),
-('MAJ-004', 'Sastra Inggris', 'Fakultas Ilmu Budaya'),
-('MAJ-005', 'Biologi', 'Fakultas MIPA'),
+('MAJ-003', 'Pendidikan Dokter', 'Fakultas Kedokteran'),
+('MAJ-004', 'Akuntansi', 'Fakultas Ekonomi dan Bisnis'),
+('MAJ-005', 'Manajemen', 'Fakultas Ekonomi dan Bisnis'),
+('MAJ-006', 'Ilmu Komunikasi', 'Fakultas Ilmu Komunikasi'),
+('MAJ-007', 'Arsitektur', 'Fakultas Teknik'),
+('MAJ-008', 'Desain Komunikasi Visual', 'Fakultas Seni Rupa dan Desain'),
 ('MAJ-009', 'Ilmu Administrasi Negara', 'Fakultas Ilmu Sosial dan Ilmu Politik'),
-('MAJ-010', 'Pendidikan Guru', 'Fakultas Ilmu Pendidikan');
+('MAJ-010', 'Pendidikan Guru', 'Fakultas Ilmu Pendidikan'),
+('MAJ-011', 'Kewirausahaan', 'Fakultas Ekonomi dan Bisnis'),
+('MAJ-012', 'Biologi', 'Fakultas MIPA');
 
 -- Seed Careers (Tepat 2 profesi per kategori sesuai aturan sistem)
 INSERT INTO careers (career_id, career_name, category, description) VALUES
-('CAR-001', 'Data Scientist', 'Teknologi & Komputasi', 'Menganalisis data besar untuk memberikan wawasan strategis.'),
-('CAR-002', 'Software Engineer', 'Teknologi & Komputasi', 'Membangun arsitektur perangkat lunak, peladen, dan sistem aplikasi yang dapat diskalakan.'),
-('CAR-003', 'Accountant', 'Profesional & Keuangan', 'Mengelola dan memeriksa laporan keuangan untuk memastikan akurasi.'),
-('CAR-004', 'Financial Analyst', 'Profesional & Keuangan', 'Menganalisis data keuangan dan tren pasar untuk membantu keputusan investasi.'),
-('CAR-005', 'Medical Doctor', 'Sains & Kedokteran', 'Mendiagnosis dan mengobati penyakit serta memberikan perawatan medis.'),
-('CAR-006', 'Biologist', 'Sains & Kedokteran', 'Mempelajari organisme hidup melalui penelitian laboratorium.'),
-('CAR-011', 'Pegawai Pemerintahan', 'Sosial & Layanan Publik', 'Menjalankan fungsi administratif untuk pelayanan masyarakat di sektor publik.'),
-('CAR-012', 'Pengajar / Guru', 'Sosial & Layanan Publik', 'Mendidik dan mengevaluasi perkembangan akademik serta karakter siswa.');
+('CAR-001', 'Data Scientist', 'Sains & Kedokteran', 'Menganalisis data mentah menjadi wawasan strategis untuk mendukung pengambilan keputusan.'),
+('CAR-002', 'Software Engineer', 'Profesional & Keuangan', 'Membangun arsitektur perangkat lunak, peladen, dan aplikasi yang andal.'),
+('CAR-003', 'Dokter Umum', 'Sains & Kedokteran', 'Mendiagnosis, merawat, dan mencegah penyakit serta menjaga kesehatan pasien.'),
+('CAR-004', 'Financial Analyst', 'Profesional & Keuangan', 'Menganalisis data keuangan dan tren pasar untuk membantu keputusan investasi dan bisnis.'),
+('CAR-005', 'Digital Marketer', 'Bisnis & Wirausaha', 'Merancang dan mengeksekusi kampanye pemasaran digital untuk meningkatkan jangkauan dan penjualan.'),
+('CAR-006', 'Arsitek', 'Seni & Komunikasi', 'Merancang tata letak dan struktur bangunan yang estetis dan fungsional.'),
+('CAR-007', 'Game Developer', 'Teknologi & Komputasi', 'Merancang dan mengembangkan mekanik, logika, dan pengalaman permainan digital.'),
+('CAR-008', 'Cloud Engineer', 'Teknologi & Komputasi', 'Mengelola dan merancang infrastruktur komputasi awan yang aman dan scalable.'),
+('CAR-009', 'Business Owner', 'Bisnis & Wirausaha', 'Membangun, mengelola, dan mengembangkan strategi bisnis serta operasional perusahaan.'),
+('CAR-010', 'Graphic Designer', 'Seni & Komunikasi', 'Menciptakan solusi visual dan tata letak desain untuk media digital maupun cetak.'),
+('CAR-011', 'Pegawai Pemerintahan', 'Sosial & Layanan Publik', 'Menjalankan fungsi administratif dan merumuskan kebijakan untuk pelayanan publik.'),
+('CAR-012', 'Pengajar / Guru', 'Sosial & Layanan Publik', 'Mendidik, membimbing, dan mengevaluasi perkembangan peserta didik.');
 
 -- Seed Relasi Career - Majors
 INSERT INTO career_majors (career_id, major_id) VALUES
