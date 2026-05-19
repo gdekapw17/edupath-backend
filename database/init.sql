@@ -10,9 +10,9 @@ DROP TABLE IF EXISTS users CASCADE;
 -- 1. Tabel Users
 CREATE TABLE users (
     user_id VARCHAR(50) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     is_assessment_completed BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

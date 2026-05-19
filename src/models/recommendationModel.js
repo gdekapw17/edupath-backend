@@ -139,6 +139,10 @@ export const getRecommendationById = async (recommendationId) => {
 
   const result = await pool.query(sql, [recommendationId]);
 
+  if (result.rows.length === 0) {
+    return null;
+  }
+
   const parentData = result.rows[0];
 
   const formattedResponse = {
