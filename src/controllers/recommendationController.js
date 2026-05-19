@@ -3,6 +3,7 @@ import {
   saveRecommendation,
   getRecommendationById,
   getAssessmentById,
+  getRecommendationByAssessmentId,
 } from "../models/recommendationModel.js";
 import redisClient from "../config/redis.js";
 
@@ -18,6 +19,18 @@ export const generatePrediction = async (req, res) => {
         error: {
           code: "VALIDATION_ERROR",
           details: "The 'assessment_id' field is required.",
+        },
+      });
+    }
+
+    const existingRec = await getRecommendationByAssessmentId(assessment_id);
+
+    if (existingRec) {
+      return res.status(200).json({
+        success: true,
+        message: "Prediction already exists for this assessment",
+        data: {
+          recommendation_id: existingRec.recommendation_id,
         },
       });
     }

@@ -157,3 +157,15 @@ export const getRecommendationById = async (recommendationId) => {
 
   return formattedResponse;
 };
+
+/**
+ * Mengecek apakah sebuah asesmen sudah pernah diprediksi sebelumnya.
+ * Mengembalikan recommendation_id jika sudah ada, atau null jika belum.
+ */
+export const getRecommendationByAssessmentId = async (assessmentId) => {
+  const sql = `SELECT recommendation_id FROM recommendations WHERE assessment_id = $1`;
+  const result = await pool.query(sql, [assessmentId]);
+
+  if (result.rows.length === 0) return null;
+  return result.rows[0];
+};
