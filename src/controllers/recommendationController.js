@@ -4,6 +4,7 @@ import {
   getRecommendationById,
   getAssessmentById,
 } from "../models/recommendationModel.js";
+import redisClient from "../config/redis.js";
 
 export const generatePrediction = async (req, res) => {
   try {
@@ -72,6 +73,24 @@ export const getRecommendationDetail = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const cacheKey = `recommendation:${id}`;
+
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      console.log(`[REDIS] Cache Hit for key:${cacheKey}`);
+
+      return res.status(200).json({
+        success: true,
+        message: "Recommendation details retrieved successfully (from cache)",
+        data: JSON.parse(cachedData),
+      });
+    }
+
+    console.log(
+      `[REDIS] Cache Miss for key: ${cacheKey}. Fetching from Database...`
+    );
+
     const recommendation = await getRecommendationById(id);
 
     if (!recommendation) {
@@ -85,6 +104,8 @@ export const getRecommendationDetail = async (req, res) => {
         },
       });
     }
+
+    await redisClient.setEx(cacheKey, 86400, JSON.stringify(recommendation));
 
     return res.status(200).json({
       success: true,
