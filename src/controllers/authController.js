@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
 import { findUserByEmail, createUser } from "../models/userModel.js";
 
 /**
@@ -47,7 +48,10 @@ export const registerUser = async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
+    const userId = uuidv4();
+
     const newUser = await createUser({
+      userId,
       email,
       passwordHash,
       fullName,

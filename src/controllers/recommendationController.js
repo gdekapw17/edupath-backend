@@ -6,6 +6,7 @@ import {
   getRecommendationByAssessmentId,
 } from "../models/recommendationModel.js";
 import redisClient from "../config/redis.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const generatePrediction = async (req, res) => {
   try {
@@ -51,7 +52,13 @@ export const generatePrediction = async (req, res) => {
 
     const aiPrediction = await predictCareer(studentData);
 
-    const result = await saveRecommendation(assessment_id, aiPrediction);
+    const recommendationId = uuidv4();
+
+    const result = await saveRecommendation(
+      recommendationId,
+      assessment_id,
+      aiPrediction
+    );
 
     return res.status(200).json({
       success: true,

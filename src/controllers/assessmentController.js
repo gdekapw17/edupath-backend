@@ -3,6 +3,7 @@ import {
   getAssessmentHistory,
   getAssessmentDetailById,
 } from "../models/assessmentModel.js";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  * Menyimpan data asesmen akademik dan perilaku siswa.
@@ -11,6 +12,8 @@ import {
 export const submitAssessment = async (req, res) => {
   try {
     const { userId } = req.user;
+
+    const assessmentId = uuidv4();
 
     const {
       math_score,
@@ -62,6 +65,7 @@ export const submitAssessment = async (req, res) => {
     );
 
     const finalAssessmentData = {
+      assessment_id: assessmentId,
       ...inputData,
       science_avg,
       social_avg,

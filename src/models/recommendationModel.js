@@ -33,29 +33,32 @@ export const getAssessmentById = async (assessmentId) => {
  * Memicu proses prediksi karier menggunakan Mock AI Service.
  * Endpoint: POST /recommendations/predict
  */
-export const saveRecommendation = async (assessmentId, aiData) => {
+export const saveRecommendation = async (
+  recommendationId,
+  assessmentId,
+  aiData
+) => {
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
 
     const insertRecSql = `
-      INSERT INTO recommendations (assessment_id, ai_summary, ai_explanation, created_at)
-      VALUES ($1, $2, $3, NOW())
+      INSERT INTO recommendations (recommendation_id, assessment_id, ai_summary, ai_explanation, created_at)
+      VALUES ($1, $2, $3, $4, NOW())
       RETURNING recommendation_id, assessment_id, created_at
     `;
 
-    const summaryText = `Berdasarkan analisis AI, kamu memiliki potensi besar di bidang ${aiData.top_category}, diikuti oleh ${aiData.all_recommendations[1].group} dan ${aiData.all_recommendations[2].group}.`;
+    const summaryText = `Berdasarkan analisis AI, kamu memiliki potensi besar di bidang ${aiData.top_category}, diikuti oleh ${aiData.all_recommendations[1].group} dan ${aiData.all_recommendations[2].group} sebagai alternatif lain.`;
 
     const recResult = await client.query(insertRecSql, [
+      recommendationId,
       assessmentId,
       summaryText,
       aiData.explanation,
     ]);
 
     const newRecommendation = recResult.rows[0];
-
-    const recommendationId = newRecommendation.recommendation_id;
 
     const insertCareerSql = `
       INSERT INTO recommendation_careers (recommendation_id, career_id, match_rank, confidence_score)

@@ -26,15 +26,21 @@ export const findUserByEmail = async (email) => {
  * @returns {object} - Mengembalikan data pengguna yang baru dibuat (tanpa password)
  */
 export const createUser = async (userData) => {
-  const { email, passwordHash, fullName, schoolName } = userData;
+  const { userId, email, passwordHash, fullName, schoolName } = userData;
 
   const sql = `
-    INSERT INTO users (email, password_hash, full_name, school_name)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO users (user_id, email, password_hash, full_name, school_name)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING user_id, email, full_name, school_name, is_assessment_completed, created_at
   `;
 
-  const result = await query(sql, [email, passwordHash, fullName, schoolName]);
+  const result = await query(sql, [
+    userId,
+    email,
+    passwordHash,
+    fullName,
+    schoolName,
+  ]);
 
   return result.rows[0];
 };

@@ -16,17 +16,18 @@ export const createAssessment = async (userId, data) => {
 
     const insertAssessmentSql = `
     INSERT INTO assessments (
-        user_id, math_score, physics_score, chemistry_score, biology_score, 
+        assessment_id, user_id, math_score, physics_score, chemistry_score, biology_score, 
         history_score, english_score, geography_score, 
         weekly_self_study_hours, absence_days, 
         science_avg, social_avg, overall_score, 
         part_time_job, extracurricular, created_at
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, NOW())
       RETURNING assessment_id, user_id, created_at
     `;
 
     const values = [
+      data.assessment_id,
       userId,
       data.math_score,
       data.physics_score,
