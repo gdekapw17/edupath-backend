@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { findUserByEmail, createUser } from "../models/userModel.js";
+import {
+  findUserByEmail,
+  createUser,
+  getUserById,
+} from "../models/userModel.js";
 import {
   saveRefreshToken,
   findRefreshToken,
