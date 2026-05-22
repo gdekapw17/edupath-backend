@@ -248,53 +248,50 @@ export const refreshTokenUser = async (req, res) => {
       });
     }
 
-    jwt.verify(
-      currentToken,
-      process.env.JWT_REFRESH_SECRET,
-      async (err, decoded) => {
-        if (err) {
-          return res.status(403).json({
-            success: false,
-            message: "Authentication failed",
-            data: null,
-            error: {
-              code: "TOKEN_VERIFICATION_FAILED",
-              details: "Failed to verify the refresh token signature.",
-            },
-          });
-        }
+    let decoded;
+    try {
+      decoded = jwt.verify(currentToken, process.env.JWT_REFRESH_SECRET);
+    } catch {
+      return res.status(403).json({
+        success: false,
+        message: "Authentication failed",
+        data: null,
+        error: {
+          code: "TOKEN_VERIFICATION_FAILED",
+          details: "Failed to verify the refresh token signature.",
+        },
+      });
+    }
 
-        const user = await getUserById(decoded.userId);
-        if (!user) {
-          return res.status(404).json({
-            success: false,
-            message: "Authentication failed",
-            data: null,
-            error: {
-              code: "USER_NOT_FOUND",
-              details: "User associated with this token does not exist.",
-            },
-          });
-        }
+    const user = await getUserById(decoded.userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "Authentication failed",
+        data: null,
+        error: {
+          code: "USER_NOT_FOUND",
+          details: "User associated with this token does not exist.",
+        },
+      });
+    }
 
-        const accessExpiresInSeconds = 900;
-        const newAccessToken = jwt.sign(
-          { userId: user.user_id, email: user.email },
-          process.env.JWT_SECRET,
-          { expiresIn: accessExpiresInSeconds }
-        );
-
-        return res.status(200).json({
-          success: true,
-          message: "Access token refreshed successfully",
-          data: {
-            access_token: newAccessToken,
-            expires_in: accessExpiresInSeconds,
-          },
-          error: null,
-        });
-      }
+    const accessExpiresInSeconds = 900;
+    const newAccessToken = jwt.sign(
+      { userId: user.user_id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: accessExpiresInSeconds }
     );
+
+    return res.status(200).json({
+      success: true,
+      message: "Access token refreshed successfully",
+      data: {
+        access_token: newAccessToken,
+        expires_in: accessExpiresInSeconds,
+      },
+      error: null,
+    });
   } catch (error) {
     console.error("Internal error in the token refresh process,", error);
     return res.status(500).json({
