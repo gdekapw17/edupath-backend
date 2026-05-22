@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import pool, { testConnection } from "./config/database.js";
 import { generalLimiter } from "./middlewares/rateLimiter.js";
 
@@ -31,6 +32,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.status(200).json({
