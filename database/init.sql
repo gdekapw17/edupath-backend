@@ -78,6 +78,15 @@ CREATE TABLE recommendation_careers (
     PRIMARY KEY (recommendation_id, career_id)
 );
 
+--8. Tabel Refresh Tokens
+CREATE TABLE refresh_tokens (
+    token_id VARCHAR(50) PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    token TEXT NOT NULL UNIQUE,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- ==========================================
 -- SEED DATA AWAL UNTUK PENGUJIAN
 -- ==========================================
@@ -144,6 +153,9 @@ CREATE INDEX idx_assessments_user_id ON assessments(user_id);
 
 -- 3. Mempercepat pencarian rekomendasi berdasarkan asesmen
 CREATE INDEX idx_recommendations_assessment_id ON recommendations(assessment_id);
+
+--4. Mempercepat kueri pencarian token
+CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
 
 -- Catatan: recommendation_careers dan career_majors sudah otomatis memiliki indeks
 -- karena mereka menggunakan Composite Primary Key.

@@ -21,7 +21,7 @@ The system is built using a modern, efficient, and enterprise-grade architecture
 
 The database structure is designed relationally to ensure data integrity without redundancy.
 
-![EduPath ERD Design](docs/assets/erd-edupath-v2.svg)
+![EduPath ERD Design](docs/assets/erd-edupath.svg)
 
 _(Note: The diagram above is exported directly from our DBML design schema)._
 

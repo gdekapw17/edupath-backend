@@ -1,6 +1,6 @@
 # EduPath API Contract
 
-- **Base URL:** `https://api.edupath.com/api/v1` (Production) / `http://localhost:3000/api/v1` (Development)
+- **Base URL:** `https://edupath-backend.vercel.app/api/v1` (Production) / `http://localhost:3000/api/v1` (Development)
 - **Content-Type:** `application/json`
 
 ## Global Error Responses
@@ -175,6 +175,63 @@ Mengautentikasi pengguna dan mengembalikan token akses (JWT) yang akan digunakan
   }
 }
 ```
+
+### 1.3. Refresh Token
+
+Memperbarui _access token_ yang telah kedaluwarsa secara otomatis menggunakan _refresh token_ yang tersimpan di dalam _HttpOnly cookie_.
+
+- **Endpoint:** `POST /auth/refresh`
+- **Access:** Public (Tidak menggunakan _Bearer Token_, membaca dari _Cookie_)
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Access token refreshed successfully",
+  "data": {
+    "access_token": "eyJhbGciOiJIUzI1NiIs...",
+    "expires_in": 900
+  },
+  "error": null
+}
+```
+
+**Error Response (401 Unauthorized - Missing Token):**
+
+```json
+{
+  "success": false,
+  "message": "Authentication failed",
+  "data": null,
+  "error": {
+    "code": "MISSING_REFRESH_TOKEN",
+    "details": "No refresh token provided in cookies."
+  }
+}
+```
+
+### 1.4. Logout User
+
+Menghancurkan sesi pengguna dengan menghapus refresh token dari pangkalan data dan mencabut cookie dari peramban klien.
+
+- **Endpoint:** `POST /auth/logout`
+- **Access:** Public
+
+**Success Response (200 OK):**
+
+```json
+{
+  "success": true,
+  "message": "Logout successful",
+  "data": null,
+  "error": null
+}
+```
+
+**Success Response (204 No Content):**
+
+(Sistem mengembalikan status ini tanpa body JSON jika pengguna melakukan request logout namun tidak ada sesi/cookie yang aktif di peramban).
 
 ## 2. User Profile Module
 
