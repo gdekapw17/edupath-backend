@@ -23,9 +23,17 @@ app.set("trust proxy", 1);
 //--- Security Middleware
 app.use(helmet());
 app.use(morgan("dev"));
+
+const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL];
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Akses ditolak oleh CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
