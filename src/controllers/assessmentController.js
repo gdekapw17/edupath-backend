@@ -1,7 +1,7 @@
 import {
   createAssessment,
-  getAssessmentHistory,
   getAssessmentDetailById,
+  getAssessmentHistoryByUserId,
 } from "../models/assessmentModel.js";
 import { v4 as uuidv4 } from "uuid";
 
@@ -103,23 +103,27 @@ export const submitAssessment = async (req, res) => {
  */
 export const getAssessment = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const userId = req.user.userId;
 
-    const history = await getAssessmentHistory(userId);
+    const history = await getAssessmentHistoryByUserId(userId);
 
     const formattedHistory = history.map((item) => ({
       assessment_id: item.assessment_id,
       created_at: item.created_at,
-      status: "processed",
+      status: item.recommendation_id ? "processed" : "pending",
+      recommendation_id: item.recommendation_id || null,
+      top_career: item.top_career || null,
+      confidence_score: item.confidence_score || null,
     }));
 
     return res.status(200).json({
       success: true,
       message: "Assessment history retrieved successfully",
       data: formattedHistory,
+      error: null,
     });
   } catch (error) {
-    console.error("Error on getAssessments,", error);
+    console.error("Error retrieving assessment history:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

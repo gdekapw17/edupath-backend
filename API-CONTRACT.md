@@ -372,7 +372,18 @@ Mengambil riwayat asesmen yang pernah diisi oleh siswa.
     {
       "assessment_id": "assess-uuid-v4",
       "created_at": "2026-05-03T12:00:00Z",
-      "status": "processed"
+      "status": "processed",
+      "recommendation_id": "rec-uuid-v4",
+      "top_career": "Data Scientist",
+      "confidence_score": 99.91
+    },
+    {
+      "assessment_id": "assess-uuid-v5",
+      "created_at": "2026-05-04T10:00:00Z",
+      "status": "pending",
+      "recommendation_id": null,
+      "top_career": null,
+      "confidence_score": null
     }
   ]
 }

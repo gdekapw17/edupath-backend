@@ -70,25 +70,6 @@ export const createAssessment = async (userId, data) => {
 };
 
 /**
- * Mengambil riwayat asesmen pengguna.
- *
- * @param {string} userId - UUID pengguna
- * @returns {Array} - Daftar riwayat asesmen
- */
-export const getAssessmentHistory = async (userId) => {
-  const sql = `
-    SELECT assessment_id, created_at
-    FROM assessments
-    WHERE user_id = $1
-    ORDER BY created_at DESC
-  `;
-
-  const result = await pool.query(sql, [userId]);
-
-  return result.rows;
-};
-
-/**
  * Mengambil detail asesmen lengkap berdasarkan ID.
  */
 export const getAssessmentDetailById = async (assessmentId, userId) => {
@@ -99,4 +80,30 @@ export const getAssessmentDetailById = async (assessmentId, userId) => {
   `;
   const result = await pool.query(sql, [assessmentId, userId]);
   return result.rows[0];
+};
+
+/**
+ * Mengambil riwayat asesmen pengguna beserta hasil rekomendasi karir utamanya.
+ */
+export const getAssessmentHistoryByUserId = async (userId) => {
+  const sql = `
+    SELECT 
+        a.assessment_id,
+        a.created_at,
+        r.recommendation_id,
+        c.career_name AS top_career,
+        rc.confidence_score
+    FROM assessments a
+    LEFT JOIN recommendations r 
+        ON a.assessment_id = r.assessment_id
+    LEFT JOIN recommendation_careers rc 
+        ON r.recommendation_id = rc.recommendation_id AND rc.match_rank = 1
+    LEFT JOIN careers c 
+        ON rc.career_id = c.career_id
+    WHERE a.user_id = $1
+    ORDER BY a.created_at DESC
+  `;
+
+  const result = await pool.query(sql, [userId]);
+  return result.rows;
 };
