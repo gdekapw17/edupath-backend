@@ -1,7 +1,7 @@
 import express from "express";
 import {
   submitAssessment,
-  getAssessment,
+  getAssessments,
   getAssessmentDetail,
 } from "../controllers/assessmentController.js";
 import { authenticateToken } from "../middlewares/authMiddleware.js";
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.use(authenticateToken);
 router.post("/", validate(createAssessmentSchema), submitAssessment);
-router.get("/", getAssessment);
+router.get("/", getAssessments);
 router.get("/:id", getAssessmentDetail);
 
 export default router;

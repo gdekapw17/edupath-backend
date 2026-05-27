@@ -59,6 +59,9 @@ export const createAssessment = async (userId, data) => {
 
     await client.query("COMMIT");
 
+    const cacheKey = `assessments_history:${userId}`;
+    await redisClient.del(cacheKey);
+
     return newAssessment;
   } catch (error) {
     await client.query("ROLLBACK");

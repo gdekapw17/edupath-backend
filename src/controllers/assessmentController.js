@@ -4,6 +4,7 @@ import {
   getAssessmentHistoryByUserId,
 } from "../models/assessmentModel.js";
 import { v4 as uuidv4 } from "uuid";
+import redisClient from "../config/redis.js";
 
 /**
  * Menyimpan data asesmen akademik dan perilaku siswa.
@@ -101,9 +102,21 @@ export const submitAssessment = async (req, res) => {
  * Mengambil riwayat asesmen pengguna.
  * Endpoint: GET /assessments
  */
-export const getAssessment = async (req, res) => {
+export const getAssessments = async (req, res) => {
   try {
     const userId = req.user.userId;
+    const cacheKey = `assessments_history:${userId}`;
+
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        message: "Assessment history retrieved successfully (from cache)",
+        data: JSON.parse(cachedData),
+        error: null,
+      });
+    }
 
     const history = await getAssessmentHistoryByUserId(userId);
 
@@ -115,6 +128,10 @@ export const getAssessment = async (req, res) => {
       top_career: item.top_career || null,
       confidence_score: item.confidence_score || null,
     }));
+
+    await redisClient.set(cacheKey, JSON.stringify(formattedHistory), {
+      EX: 3600,
+    });
 
     return res.status(200).json({
       success: true,
