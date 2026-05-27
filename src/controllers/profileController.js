@@ -1,4 +1,5 @@
 import { getUserById, updateUserProfile } from "../models/userModel.js";
+import redisClient from "../config/redis.js";
 
 /**
  * Mengambil data profil pengguna yang sedang login.
@@ -10,6 +11,18 @@ import { getUserById, updateUserProfile } from "../models/userModel.js";
 export const getProfile = async (req, res) => {
   try {
     const { userId } = req.user;
+    const cacheKey = `profile:${userId}`;
+
+    const cachedProfile = await redisClient.get(cacheKey);
+
+    if (cachedProfile) {
+      return res.status(200).json({
+        success: true,
+        message: "Profile retrieved successfully (from cache)",
+        data: JSON.parse(cachedProfile),
+        error: null,
+      });
+    }
 
     const user = await getUserById(userId);
 
@@ -24,6 +37,18 @@ export const getProfile = async (req, res) => {
         },
       });
     }
+
+    const profileData = {
+      user_id: user.user_id,
+      email: user.email,
+      full_name: user.full_name,
+      school_name: user.school_name,
+      is_assessment_completed: user.is_assessment_completed,
+    };
+
+    await redisClient.set(cacheKey, JSON.stringify(profileData), {
+      EX: 7200,
+    });
 
     return res.status(200).json({
       success: true,
@@ -80,6 +105,9 @@ export const updateProfile = async (req, res) => {
       fullName,
       schoolName,
     });
+
+    const cacheKey = `profile:${userId}`;
+    await redisClient.del(cacheKey);
 
     return res.status(200).json({
       success: true,
