@@ -1,4 +1,5 @@
 import pool from "../config/database.js";
+import redisClient from "../config/redis.js";
 
 /**
  * Menyimpan data asesmen baru dan memperbarui status pengguna.
