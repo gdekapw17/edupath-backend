@@ -1,5 +1,4 @@
 import pool from "../config/database.js";
-import redisClient from "../config/redis.js";
 
 /**
  * Menyimpan data asesmen baru dan memperbarui status pengguna.
@@ -59,9 +58,6 @@ export const createAssessment = async (userId, data) => {
     await client.query(updateUserSql, [userId]);
 
     await client.query("COMMIT");
-
-    const cacheKey = `assessments_history:${userId}`;
-    await redisClient.del(cacheKey);
 
     return newAssessment;
   } catch (error) {

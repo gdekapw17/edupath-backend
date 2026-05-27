@@ -75,6 +75,9 @@ export const submitAssessment = async (req, res) => {
 
     const newAssessment = await createAssessment(userId, finalAssessmentData);
 
+    const cacheKey = `assessments_history:${userId}`;
+    await redisClient.del(cacheKey);
+
     return res.status(201).json({
       success: true,
       message: "Assessment data submitted successfully",
