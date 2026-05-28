@@ -31,7 +31,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Akses ditolak oleh CORS"));
+        callback(new Error("Access denied by CORS"));
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -54,13 +54,9 @@ app.use("/api", generalLimiter);
 
 // --- API Routes ---
 app.use("/api/v1/auth", authRoutes);
-
 app.use("/api/v1/profiles", profileRoutes);
-
 app.use("/api/v1/assessments", assessmentRoutes);
-
 app.use("/api/v1/recommendations", recommendationRoutes);
-
 app.use("/api/v1/careers", masterRoutes);
 
 // --- Server Initialization ---
