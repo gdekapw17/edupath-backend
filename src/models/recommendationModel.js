@@ -30,7 +30,7 @@ export const getAssessmentById = async (assessmentId) => {
 };
 
 /**
- * Memicu proses prediksi karier menggunakan Mock AI Service.
+ * Memicu proses prediksi karier menggunakan AI Service.
  * Endpoint: POST /recommendations/predict
  */
 export const saveRecommendation = async (
